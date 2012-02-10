@@ -1,9 +1,12 @@
 package models;
 
+import javax.persistence.Entity;
+
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 
+@Entity
 public class BookShopUser extends Model {
 	
 	@Email
