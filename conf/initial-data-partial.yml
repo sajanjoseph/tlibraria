@@ -1,22 +1,19 @@
 # you describe your data using the YAML notation here
 # and then load them using Fixtures.load("data.yml")
-
-# you describe your data using the YAML notation here
-# and then load them using Fixtures.load("data.yml")
 BookShopUser(adminuser):
     email:       admin@bookshop.com
-    password:    bookshopadmin
+    password:    c7a0585a855e6e1102b70b5ebcee6c46e920a1a2
     fullName:    BookshopAdmin
     isAdmin:     true
 
 BookShopUser(customer1):
     email:       denny@gmail.com
-    password:    denny
+    password:    d9e486069ca966baf998d402d6c6eeb0d3eeeb0f
     fullName:    DennyJoseph
     isCustomer:  true
 BookShopUser(customer2):
     email:       jimmy@gmail.com
-    password:    jimmy
+    password:    4d98d2819faf945261d3b827ba4c12a65c36405
     fullName:    JimmyJoseph
     isCustomer:  true
 Author(sk):
