@@ -34,7 +34,7 @@ public class Category extends Model implements Comparable<Category> {
 	public static Category findOrCreateByName(String name) {
 		Category cat = Category.find("byName", name).first();
 		if (cat == null) {
-			cat = new Category();
+			cat = new Category(name);
 		}
 		return cat;
 	}
