@@ -42,18 +42,17 @@ public class Address extends Model {
 	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
+		result = result
 				+ ((addressLine1 == null) ? 0 : addressLine1.hashCode());
-		result = prime * result
+		result = result
 				+ ((addressLine2 == null) ? 0 : addressLine2.hashCode());
-		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((country == null) ? 0 : country.hashCode());
-		result = prime * result
+		result = result + ((city == null) ? 0 : city.hashCode());
+		result = result + ((country == null) ? 0 : country.hashCode());
+		result = result
 				+ ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-		result = prime * result + ((pincode == null) ? 0 : pincode.hashCode());
-		result = prime * result + ((state == null) ? 0 : state.hashCode());
+		result = result + ((pincode == null) ? 0 : pincode.hashCode());
+		result = result + ((state == null) ? 0 : state.hashCode());
 		return result;
 	}
 
@@ -62,8 +61,6 @@ public class Address extends Model {
 		System.out.println("equals("+obj);
 		if (this == obj)
 			return true;
-		/*if (!super.equals(obj))
-			return false;*/
 		if (getClass() != obj.getClass())
 			return false;
 		Address other = (Address) obj;

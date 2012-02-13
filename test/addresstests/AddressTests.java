@@ -23,16 +23,28 @@ public class AddressTests extends UnitTest {
 		address1.addressLine1 = "#1401,Brigade Millennium";
 		address1.state = "Karnataka";
 		address1.country = "India";
-		System.out.println("address1="+address1);
 		
 		Address address2 = new Address();
 		address2.addressLine1 = "#1401,Brigade Millennium";
 		address2.state = "Karnataka";
 		address2.country = "India";
-		System.out.println("address2="+address2);
+		
+		Address address3 = new Address();
+		address3.addressLine1 = "#1401,Brigade Millennium";
+		address3.addressLine2 = "j.p nagar,bangalore";
+		address3.state = "Karnataka";
+		address3.country = "India";
+		
+		Address address4 = new Address();
+		address4.addressLine1 = "#1401,Brigade Millennium,j.p nagar,bangalore";
+		address4.state = "Karnataka";
+		address4.country = "India";
 		
 		assertEquals(address1,address2);
-		
+		assertFalse(address1.equals(address3));
+		assertFalse(address3.equals(address4));//need to  refactor 
 	}
+	
+	
 
 }

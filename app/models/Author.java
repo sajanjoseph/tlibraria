@@ -1,6 +1,9 @@
 package models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+
 
 import play.data.validation.Required;
 import play.db.jpa.Model;
@@ -8,10 +11,10 @@ import play.db.jpa.Model;
 @Entity
 public class Author extends Model {
 	@Required
-	private String name;
+	public String name;
 	
 	@Required
-	private String address;
+	public String address;
 
 	public Author() {
 		super();
@@ -25,6 +28,14 @@ public class Author extends Model {
 	
 	public String toString() {
 		return this.name;
+	}
+
+	public static Author getAuthor(String name, String address) {
+		return Author.find("byNameAndAddress", name,address).first();
+	}
+
+	public static List<Author> getAuthorsByName(String name) {
+		return Author.find("byName", name).fetch();
 	}
 	
 	
