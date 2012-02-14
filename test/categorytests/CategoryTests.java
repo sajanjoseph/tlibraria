@@ -24,5 +24,7 @@ public class CategoryTests extends UnitTest {
 		assertNotNull(javacat);
 		assertEquals("java",javacat.name);
 	}
+	
+	
 
 }

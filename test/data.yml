@@ -30,7 +30,20 @@ Author(rowling):
 Author(bcornwell):
     name:         Bernard Cornwell
     address:      Cape Cod,Massachusetts
+Publisher(grantpub):
+    code:         GRA
+    name:         grant
+    address:      new york
 
+Publisher(bbry):
+    code:         BLO
+    name:         bloomsbury
+    address:      london
+
+Publisher(griffin):
+    code:         GRI
+    name:         St. Martin's Griffin
+    address:      Flatiron Building,New York City
 
 Category(fiction):
     name:        fiction
@@ -38,3 +51,143 @@ Category(magic):
     name:        magic
 Category(history):
     name:        history
+    
+Book(gunslinger1):
+   isbn:          978-0451160522
+   name:          The Gunslinger (The Dark Tower, Book 1)
+   publishDate:   1989-07-01
+   price:         3.00
+   description:   >
+                  It tells the story of the gunslinger, Roland of Gilead, 
+                  and his quest to catch the man in black, the first of
+                  many steps towards his ultimate destination -the Dark Tower
+   categories:
+                  - fiction
+   author:        sk
+   publisher:     grantpub
+
+Book(gunslinger4):
+   isbn:          978-0451210876
+   name:          Wizard and Glass (The Dark Tower, Book 4)
+   publishDate:   2003-10-07
+   price:         8.99
+   description:   >
+                  Roland and his band of followers have narrowly escaped one world and slipped into the next. 
+                  There Roland tells them a tale of long-ago love and adventure involving a beautiful and quixotic woman. 
+                  And they will be drawn into an ancient mystery of spellbinding magic and supreme menace.
+   categories:
+                  - fiction
+   author:        sk
+   publisher:     grantpub
+
+Book(harrypotter1):
+   isbn:          978-0590353403
+   name:          Harry Potter and the Sorcerer's Stone (Book 1)
+   publishDate:   1998-10-01
+   price:         7.40
+   description:   >
+                  A mysterious letter, delivered by the friendly giant Hagrid,
+                  wrenches Harry from his dreary, Muggle-ridden existence.
+                  Harry finds himself at Hogwarts with his owl Hedwig...
+                  and that's where the real adventure--humorous, haunting,
+                  and suspenseful--begins
+   categories:
+                  - fiction
+                  - magic
+   author:        rowling
+   publisher:     bbry
+
+Book(harrypotter2):
+   isbn:          978-0439064873
+   name:          Harry Potter and the Chamber of Secrets (Book 2)
+   publishDate:   2000-08-15
+   price:         7.23
+   description:   >
+                  After a long summer with the horrid Dursleys
+                  Harry is thwarted in his attempts to hop the train
+                  to the Hogwarts School of Witchcraft and Wizardry
+                  to begin his second year. 
+                  But when his only transportation option is a magical flying car,
+                  it is just his luck to crash into a valuable (but clearly vexed) Whomping Willow.
+                  Still, all this seems like a day in the park compared to
+                  what happens that fall within the haunted halls of Hogwarts
+   categories:
+                  - fiction
+                  - magic
+   author:        rowling
+   publisher:     bbry
+
+Book(harrypotter3):
+   isbn:          978-0439136365
+   name:          Harry Potter and the Prisoner of Azkaban
+   publishDate:   2001-09-11
+   price:         6.98
+   description:   >
+                  For twelve long years, the dread fortress of Azkaban held an infamous prisoner named Sirius Black. 
+                  Convicted of killing thirteen people with a single curse, he was said to be the heir apparent to 
+                  the Dark Lord, Voldemort.Now he has escaped, leaving only two clues as to where he might be headed:
+                  Harry Potter's defeat of You-Know-Who was Black's downfall as well. 
+                  And the Azkban guards heard Black muttering in his sleep, "He's at Hogwarts...he's at Hogwarts."
+                  Harry Potter isn't safe, not even within the walls of his magical school, surrounded by his friends. 
+                  Because on top of it all, there may well be a traitor in their midst.
+   categories:
+                  - fiction
+                  - magic
+   author:        rowling
+   publisher:     bbry
+
+Book(winterking):
+   isbn:          978-0312156961
+   name:          The Winter King (The Arthur Books 1)
+   publishDate:   1997-04-15
+   price:         11.55
+   description:   >
+                 The tale begins in Dark Age Britain, a land where Arthur has been banished
+                 and Merlin has disappeared, where a child-king sits unprotected on the throne,
+                 where religion vies with magic for the souls of the people. 
+                 It is to this desperate land that Arthur returns, 
+                 a man at once utterly human and truly heroic: a man of honor, loyalty, 
+                 and amazing valor; a man who loves Guinevere more passionately than he should; 
+                 a man whose life is at once tragic and triumphant
+   categories:
+                  - fiction
+                  - history
+   author:       bcornwell
+   publisher:    griffin
+   
+Book(enemyofgod):
+   isbn:          978-0312187149
+   name:          Enemy of God (The Arthur Books 2)
+   publishDate:   1998-03-15
+   price:         10.87
+   description:   >
+                   Arthur, against all odds, has achieved peace among the warring British Kingdoms 
+                   and is soon set to turn his attentions against the Saxons. Merlin arrives with 
+                   a dangerous and near impossible quest into the lands of the most terrible of 
+                   Britain's enemies in an attempt to recover an ancient relic which will help him 
+                   restore Britain to its former glory. All the while, Arthur's enemies close around him, 
+                   ready to destroy his world for their own aims...
+   categories:
+                  - fiction
+                  - history
+   author:       bcornwell
+   publisher:    griffin
+   
+Book(excalibur):
+   isbn:          978-0312206482
+   name:          Excalibur, A Novel of Arthur (The Arthur Books 3)
+   publishDate:   1999-07-16
+   price:         11.55
+   description:   >
+                  "The third novel in the Warlord Trilogy Excalibur: A Novel of Arthur 
+                  immerses the reader in the Britain of the Dark Ages. Merlin, 
+                  the greatest of the Druids, believes that the ancient gods are deserting Britain, 
+                  and that the invading Saxons can't be defeated without the help of the gods. 
+                  Mordred reigns with a brutal hand, and Arthur sees his dreams of peace between 
+                  the British Kingdoms evaporate
+   categories:
+                  - fiction
+                  - history
+   author:       bcornwell
+   publisher:    griffin
+

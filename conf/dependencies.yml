@@ -2,3 +2,7 @@
 
 require:
     - play
+    - play -> crud
+    - play -> secure
+    - play -> pdf 0.9
+    - play -> search head

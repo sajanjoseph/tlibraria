@@ -25,10 +25,18 @@ public class PublisherTests extends UnitTest  {
 	}
 	
 	 @Test
-	    public void testCreateAndFindPublishers() {
-	    	new Publisher("AMU","amazon","chicago").save();
-	    	new Publisher("AMB","amazon","london").save();
-	    	assertEquals(2,Publisher.getPublishersByName("amazon").size());
-	    }
+    public void testCreateAndFindPublishers() {
+    	new Publisher("AMU","amazon","chicago").save();
+    	new Publisher("AMB","amazon","london").save();
+    	assertEquals(2,Publisher.getPublishersByName("amazon").size());
+    }
+	
+	@Test(expected=javax.persistence.PersistenceException.class)
+	public void publisherCodeIsUnique() {
+		new Publisher("GRA","grant","new york").save();
+		new Publisher("GRA","grantone","new york").save();
+	}
+	
+	
 
 }
