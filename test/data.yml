@@ -191,3 +191,23 @@ Book(excalibur):
    author:       bcornwell
    publisher:    griffin
 
+Payment(visa-denny):
+   name:         denny
+   creditCardNumber: 4111111111111111
+   month:        02
+   year:         2012
+   cctype:       Visa
+   
+Payment(visa-jimmy):
+   name:         jimmy
+   creditCardNumber: 4012888888881881
+   month:        03
+   year:         2013
+   cctype:       Visa
+   
+Payment(mcard-denny):
+   name:         denny joseph
+   creditCardNumber: 5555555555554444
+   month:        03
+   year:         2013
+   cctype:       MasterCard

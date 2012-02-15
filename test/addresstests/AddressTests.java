@@ -40,7 +40,7 @@ public class AddressTests extends UnitTest {
 		address4.state = "Karnataka";
 		address4.country = "India";
 		
-		assertEquals(address1,address2);
+		assertTrue(address1.equals(address2));
 		assertFalse(address1.equals(address3));
 		assertFalse(address3.equals(address4));//need to  refactor 
 	}
