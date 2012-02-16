@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import play.db.jpa.Model;
+import utils.ShippingCalculator;
+import utils.Status;
+import utils.TaxCalculator;
 
 @Entity
 public class BookOrder extends Model {
@@ -18,7 +21,7 @@ public class BookOrder extends Model {
 	@OneToMany( cascade=CascadeType.ALL,orphanRemoval=true)
 	public Set<CartItem> cartItems;
 
-	public String status;
+	public Status status;
 	
 	public Date order_date;
 	
@@ -31,10 +34,10 @@ public class BookOrder extends Model {
 	public BookShopUser customer;
 	
 	public BookOrder() {
-		this(new TreeSet<CartItem>(),null,"pending",new Date());
+		this(new TreeSet<CartItem>(),null,Status.PENDING,new Date());
 	}
 	
-	public BookOrder(Set<CartItem> cartItems,BookShopUser customer,String status,Date order_date) {
+	public BookOrder(Set<CartItem> cartItems,BookShopUser customer,Status status,Date order_date) {
 		super();
 		this.cartItems = cartItems;
 		this.customer = customer;
@@ -43,7 +46,7 @@ public class BookOrder extends Model {
 	}
 	
 	public BookOrder(BookShopUser customer) {
-		this(new TreeSet<CartItem>(),customer,"pending",new Date());
+		this(new TreeSet<CartItem>(),customer,Status.PENDING,new Date());
 	}
 	
 	public boolean addItem(CartItem item,int qty){
@@ -90,5 +93,25 @@ public class BookOrder extends Model {
 		return total;
 	}
 	
+	public BigDecimal getTax() {
+		//tax 
+		return TaxCalculator.getTax(this.cartItems);
+	}
+	
+	public BigDecimal getShipping() {
+		//shipping
+		return ShippingCalculator.getShipping(this.cartItems);
+	}
+	
+	public BigDecimal getTotalPricePlusTaxAndShipping() {
+		BigDecimal totalprice = getTotalPrice();
+		BigDecimal tax = getTax();
+		return totalprice.add(tax).add(getShipping());
+	}
+	
+	
 
 }
+
+
+

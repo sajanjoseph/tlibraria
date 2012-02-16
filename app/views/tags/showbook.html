@@ -1,0 +1,99 @@
+*{display book details in 'full'  or 'concise' modes}*
+*{accepts a 'book' instance and a  string value for mode of display keyword 'as'}*
+
+<div class="book${_as =='concise' ? '-concise':''}">
+	#{if (_as== 'full') }
+			#{if _book.categories}
+				<div class="tags">
+					<span class="tags">
+						Categories:
+							#{list items:_book.categories,as:'category'}
+								<a href="#">${category}</a>${category_isLast?'':','}
+							#{/list}
+					</span>
+				</div>
+			#{/if}
+		<div class="cover">
+			<img src="@{'/public/images/' + _book.isbn + '.png'}"></img> 
+		</div>
+		<h2 class="book-name">
+        ${_book.name}
+    	</h2>
+	#{/if}
+	
+	<div class="book-metadata">
+		#{if (_as=='concise' )}
+			<div class="book-concise">
+				<a href="#" >${_book.name}</a>by ${_book.author.name} priced at: ${_book.price.formatCurrency(messages.get('currencycode')).raw()} (${messages.get('currencycode')}) 
+			</div>
+		#{/if}
+		#{else}
+			<span class="book-author">written by ${_book.author.name}</span>
+			<p>
+			<span class="book-publishdate">published on :${_book.publishDate.format('dd MMM,yyyy')}</span>
+			</p>
+			<p>
+			<span class="book-price">priced at: ${_book.price.formatCurrency(messages.get('currencycode')).raw()} (${messages.get('currencycode')})</span>
+			</p>
+			<p>
+			<span class="book-isbn">isbn: ${_book.isbn}</span>
+			</p>
+			<p>
+			<span class="book-description">${_book.description}</span>
+			</p>
+		
+	</div>
+	<span class="book-reviews">
+				${_book.reviews.size()?:'no'} review${_book.reviews.size().pluralize()} till now
+				#{if _book.reviews}
+					,latest by ${_book.reviews[_book.reviews.size()-1].author}
+			
+				#{/if}
+	</span>
+			
+			<div class="reviews">
+				 #{list items:_book.reviews,as:'review'}
+					 	<div class="review">
+						 	<div class="review-metadata">
+						 		<span class="review-author">by ${review.author}</span>
+						 		<span class="review-date">${review.postedAt.format("dd MMMM yyyy")}</span>
+						 	</div>
+						 	<div class="review-content">
+						 		
+						 		${review.content.escape().nl2br()}
+						 	</div>
+					 	</div>
+				 #{/list}
+			</div>
+			#{if flash.success}
+				<p class="success">${flash.success}</p>
+			#{/if}
+			<div class="addreviewform">
+				<a href="#" class="showaddreviewformlink"><img src="@{'/public/images/addreview-small.png'}"/>add a review for ${_book.name}</a>
+				<a href="#" class="hideaddreviewformlink">hide reviewform</a>
+	#{ifErrors}
+			<p class="error">
+			#{errors}
+				    ${error}<br/>
+			#{/errors}
+	        </p>
+	 #{/ifErrors}
+	 
+		<div class="reviewform">
+		#{form @Application.addReview(_book.id)}
+			<p>
+				<label for="author">Your Name:</label>
+				<input type="text" name="author" id="author" value="${params.author}"/>
+			</p>
+			 <p>
+		        <label for="content">Your message: </label>
+		        <textarea name="content" id="content" >${params.content}</textarea>
+		    </p>
+		    <p>
+		        <input type="submit" value="Add your review" />
+		    </p>
+		#{/form}
+		</div>
+</div>
+		#{/else}
+</div>

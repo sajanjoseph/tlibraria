@@ -1,4 +1,30 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-<h2> my page </h2>
+#{if book}
+	
+	#{showbook book:book, as:'full' /}
+#{/if}
+
+<div id="search">
+	#{form @Application.search(null,keyword)}
+	<p>
+		<input type="text" name="keyword" id="keyword" size="18" value=""/>
+	</p>
+	<p>
+		<input type="submit" value="search for a name "/>
+	</p>
+	#{/form}
+</div>
+
+#{if books.size()>0 }
+	#{list items:books, as:'abook'}
+		#{showbook book:abook, as:'concise' /}
+	#{/list}
+#{/if}
+
+#{else}
+	<div class="empty">
+        There are currently no books here.
+    </div>
+#{/else}

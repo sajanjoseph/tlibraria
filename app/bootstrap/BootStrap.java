@@ -12,7 +12,7 @@ public class BootStrap extends Job {
 	public void doJob() throws Exception {
 		if (BookShopUser.count()==0) {
 			Fixtures.deleteDatabase();
-			Fixtures.loadModels("initial-data-partial.yml");
+			Fixtures.loadModels("initial-data.yml");
 		}
 	}
 	
