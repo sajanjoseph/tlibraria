@@ -48,27 +48,22 @@ public class Application extends Controller {
         render(category,book, books);
     }
     
-    private static List<Book> getSearchResults(String kw){
-    	List<Book> books = null;
-    	if(kw!=null && kw.length()>0) {
-    		String trimmedKeyword = kw.trim().toLowerCase();
-        	String pattern = "%"+trimmedKeyword+"%";
-        	String query="select b from Book b where (lower(name) like :pattern or lower(description) like :pattern) order by b.publishDate desc";
-        	
-        	books = Book.find(query).bind("pattern", pattern).fetch();
-    	}
-    	
-    	return books;
-    }
     public static void search(String keyword) {
     	Book book = null;
     	List<Book> books = null;
     	if(keyword!=null && keyword.length()>0) {
-    		books = getSearchResults(keyword);
+    		String trimmedKeyword = keyword.trim().toLowerCase();
+        	String pattern = "%"+trimmedKeyword+"%";
+        	String query="select b from Book b where (lower(name) like :pattern or lower(description) like :pattern) order by b.publishDate desc";
+        	
+        	books = Book.find(query).bind("pattern", pattern).fetch();
+    		
     	}else {
     		books = Book.find("order by publishDate desc").fetch();
     	}
-    	book = books.get(0);
+    	if(books !=null && books.size()>0) {
+    		book = books.get(0);
+    	}
     	render(books,book);
     }
     
