@@ -24,7 +24,7 @@
 	<div class="book-metadata">
 		#{if (_as=='concise' )}
 			<div class="book-concise">
-				<a href="#" >${_book.name}</a>by ${_book.author.name} priced at: ${_book.price.formatCurrency(messages.get('currencycode')).raw()} (${messages.get('currencycode')}) 
+				<a href="@{Application.details(_book.id)}" >${_book.name}</a>  by ${_book.author.name} priced at: ${_book.price.formatCurrency(messages.get('currencycode')).raw()} (${messages.get('currencycode')}) 
 			</div>
 		#{/if}
 		#{else}

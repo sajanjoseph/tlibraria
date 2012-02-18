@@ -1,0 +1,22 @@
+#{extends 'main.html' /}
+#{set title:'book details' /}
+
+#{if book}
+	
+	#{showbook book:book,as: 'full' /}
+#{/if}
+
+#{if books &&  books.size()>0}
+	#{list items:books, as:'abook'}
+		#{showbook book:abook, as:'concise' /}
+	#{/list}
+#{/if}
+
+#{else}
+	<div class="empty">
+         could not find  books  with name containing '${keyword}' here.
+    </div>
+#{/else}
+<div id="footer">
+	<a href="@{Application.index()}" > Home </a>
+</div>

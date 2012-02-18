@@ -136,13 +136,13 @@ public class Book extends Model implements Comparable<Book>{
 	}
 
 	public static List<Book> findTaggedWith(String categoryName) {
-		Map<String,List<Book>> tagMap = (Map<String, List<Book>>) Cache.get("tagmap");
+		/*Map<String,List<Book>> tagMap = (Map<String, List<Book>>) Cache.get("tagmap");
 		if(tagMap==null) {
 			tagMap= new HashMap<String,List<Book>>();
-		}
-		List<Book> books = Book.find("select distinct book from Book book join book.categories as cat where cat.name=:name").bind("name", categoryName).fetch();
-		tagMap.put(categoryName, books);
-		Cache.add("tagmap", tagMap,"20mn");
+		}*/
+		List<Book> books = Book.find("select distinct book from Book book join book.categories as cat where cat.name=:name order by book.publishDate desc").bind("name", categoryName).fetch();
+		//tagMap.put(categoryName, books);
+		//Cache.add("tagmap", tagMap,"20mn");
 		return books;
 	}
 	

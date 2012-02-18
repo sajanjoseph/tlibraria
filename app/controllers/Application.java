@@ -18,10 +18,19 @@ public class Application extends Controller {
 
     public static void index() {
     	Book book = null;
-    	List<Book> books = Book.find("order by PublishDate asc").fetch();
+    	List<Book> books = Book.find("order by PublishDate desc").fetch();
     	if(books.size()>0) {
     		book = books.get(0);
     	}
+    	render(books,book);
+    }
+    /*
+     * for a given bookId show the book in full mode,
+     * and show all books listing
+     */
+    public static void details(Long bookId) {
+    	List<Book> books = Book.find("order by PublishDate desc").fetch();
+    	Book book = Book.findById(bookId);
     	render(books,book);
     }
     

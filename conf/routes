@@ -6,7 +6,7 @@
 GET     /                                       Application.index
 
 GET     /books/category/{category}              Application.listTagged
-
+GET     /books/{<[0-9]+>bookId}                 Application.details
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
