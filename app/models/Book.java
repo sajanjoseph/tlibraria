@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -59,7 +60,7 @@ public class Book extends Model implements Comparable<Book>{
 	@OneToMany(mappedBy="book",cascade=CascadeType.ALL)
 	public List<Review> reviews;
 	
-	@ManyToMany(cascade=CascadeType.PERSIST)
+	@ManyToMany(cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
 	public Set<Category> categories;
 
 	public Book() {

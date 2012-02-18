@@ -80,6 +80,26 @@ Book(gunslinger4):
    author:        sk
    publisher:     grantpub
 
+Book(gunslinger3):
+   isbn:          978-0451173317
+   name:          The Waste Lands
+   publishDate:   1993-01-01
+   price:         3.70
+   description:   >
+                  Roland has two companions on his quest for the tower at the portal of all the world.
+                  Susannah Dean and Eddie Dean, who entered his world from New York City of 1963 and 1987, 
+                  respectively.When the three track down the den of a 70-foot-tall cyborg bear, 
+                  they are pointed down a path leading to the Tower. But Roland is slowly going mad, 
+                  a fact that seems linked to his past experiences with Jake Chambers, a boy who died twice. 
+                  Jake reappears here, displaying great resilience in crossing over from 1977 New York City 
+                  to join Roland & Co. They press on, plumbing the depths of a children's book that tells 
+                  a profound and ancient tale. Unfortunately, the questers don't reach the Tower; in fact, 
+                  they're caught in a cliff-hanger ending!
+   categories:
+                  - fiction
+   author:        sk
+   publisher:     grantpub
+
 Book(harrypotter1):
    isbn:          978-0590353403
    name:          Harry Potter and the Sorcerer's Stone (Book 1)

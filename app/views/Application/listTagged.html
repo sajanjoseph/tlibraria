@@ -1,0 +1,27 @@
+#{extends 'main.html'/}
+
+#{if book}
+	
+	#{showbook book:book,as: 'full' /}
+#{/if}
+#{set title:'Books of category '+category /}
+
+#{if books.size()>1}
+	<h3>There are ${books.size()} books in '${category}' category</h3>
+#{/if}
+#{elseif books}
+  <h3>There is 1 book in '${category}' category</h3>
+#{/elseif}
+#{else}
+  <h3>No books in '${category}' category</h3>
+#{/else}
+
+*{*******list books********}*
+<div class="book-concise">
+	#{list items:books,as:'book'}
+		#{showbook book:book,as:'concise' /}
+	#{/list}
+</div>
+<div id="footer">
+	<a href="@{Application.index()}" > Home </a>
+</div>

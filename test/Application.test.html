@@ -1,7 +1,13 @@
 *{ You can use plain selenium command using the selenium tag }*
 
+#{fixture delete:'all', load:'data.yml' /}
+
 #{selenium}
+	clearSession()
     // Open the home page, and check that no error occured
     open('/')
+    waitForPageToLoad(1000)
     assertNotTitle('Application error')
+    assertTitle('Home')
+    assertTextPresent('Taberna Libraria')
 #{/selenium}

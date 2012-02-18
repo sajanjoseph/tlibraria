@@ -8,7 +8,7 @@
 					<span class="tags">
 						Categories:
 							#{list items:_book.categories,as:'category'}
-								<a href="#">${category}</a>${category_isLast?'':','}
+								<a href="@{Application.listTagged(category.name)}">${category}</a>${category_isLast?'':','}
 							#{/list}
 					</span>
 				</div>

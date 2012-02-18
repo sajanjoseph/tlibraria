@@ -84,15 +84,16 @@ public class BookTests extends UnitTest {
     	
     	book2.addReview("bob", "entertains people of all ages");
 		//deleting book1 deletes the 2 reviews
+    	assertEquals(9,Book.count());
     	book1.delete();
-    	//assertEquals(3,Book.count());
-    	assertEquals(7,Book.count());
+    	
+    	assertEquals(8,Book.count());
     	assertEquals(1,Review.count());
     	
     	//deleting book2 deletes the 1 review
     	book2.delete();
     	//assertEquals(2,Book.count());
-    	assertEquals(6,Book.count());
+    	assertEquals(7,Book.count());
     	assertEquals(0,Review.count());
 		
 	}
@@ -119,7 +120,7 @@ public class BookTests extends UnitTest {
     	assertEquals(5,Category.count());
     	
     	//fiction category --> 8 books
-    	assertEquals(8,Book.findTaggedWith("fiction").size());
+    	assertEquals(9,Book.findTaggedWith("fiction").size());
     
     	//magic category --> 3 books
     	assertEquals(3,Book.findTaggedWith("magic").size());

@@ -1,6 +1,7 @@
 package controllers;
 
 import play.*;
+import play.cache.Cache;
 import play.data.validation.Required;
 import play.mvc.*;
 
@@ -24,10 +25,19 @@ public class Application extends Controller {
     	render(books,book);
     }
     
+    /*
+     * render list of books of a given category
+     */
     public static void listTagged(String category) {
-    	//render list of books of a category
+    	List<Book> books =null;
+   		books= Book.findTaggedWith(category);
     	
-    	render();
+    	Book book = null;
+        if (books!=null && books.size()>0) {
+        	book = books.get(0);
+        }
+        System.out.println("books="+books.size());
+        render(category,book, books);
     }
     
     public static void search(Long id,String keyword) {

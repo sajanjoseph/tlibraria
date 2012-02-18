@@ -5,6 +5,8 @@
 # Home page
 GET     /                                       Application.index
 
+GET     /books/category/{category}              Application.listTagged
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

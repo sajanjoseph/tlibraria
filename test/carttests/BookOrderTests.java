@@ -145,7 +145,7 @@ public class BookOrderTests extends UnitTest {
 	    //add 3 copies of book1
 	    CartItem citem1 = new CartItem(book1,3);
 	    
-	    //add 2 copies of book1
+	    //add 2 copies of book2
     	CartItem citem2 = new CartItem(book2,2);
     	
     	//add 1 copy of book3
@@ -186,6 +186,39 @@ public class BookOrderTests extends UnitTest {
     	assertEquals("978-0590353403",denCartItem2.book.isbn);
 	 }
 	 
-	 
+	 @Test
+	 public void testCartItemsDeletedWhenCartIsDeleted() {
+		 Fixtures.loadModels("data.yml");
+		 BookShopUser den = BookShopUser.find("byEmail", "denny@gmail.com").first();
+		 assertNotNull(den);
+		 
+		 Book book1 = Book.find("byIsbn","978-0439136365").first();
+	     assertNotNull(book1);
+	     
+	     Book book2 = Book.find("byIsbn","978-0451210876").first();
+	     assertNotNull(book2);
+	     
+	   //add 3 copies of book1
+	    CartItem citem1 = new CartItem(book1,3);
+	    
+	    //add 2 copies of book2
+    	CartItem citem2 = new CartItem(book2,2);
+    	
+    	//add cartItemsToCart
+    	BookOrder cart = new BookOrder(den);
+    	cart.addItem(citem1);    	
+    	cart.addItem(citem2);
+    	cart.save();
+    	assertEquals(1,BookOrder.findAll().size());
+    	assertEquals(2,cart.cartItemsCount());
+    	
+    	assertEquals(2,CartItem.findAll().size());
+    	
+    	//deleting the cart should delete the corresponding cartitems
+    	cart.delete();
+    	assertEquals(0,BookOrder.findAll().size());
+    	assertEquals(0,CartItem.findAll().size());
+    	
+	 }
 
 }
