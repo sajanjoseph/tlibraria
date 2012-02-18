@@ -45,13 +45,31 @@ public class Application extends Controller {
         if (books!=null && books.size()>0) {
         	book = books.get(0);
         }
-        System.out.println("books="+books.size());
         render(category,book, books);
     }
     
-    public static void search(Long id,String keyword) {
+    private static List<Book> getSearchResults(String kw){
+    	List<Book> books = null;
+    	if(kw!=null && kw.length()>0) {
+    		String trimmedKeyword = kw.trim().toLowerCase();
+        	String pattern = "%"+trimmedKeyword+"%";
+        	String query="select b from Book b where (lower(name) like :pattern or lower(description) like :pattern) order by b.publishDate desc";
+        	
+        	books = Book.find(query).bind("pattern", pattern).fetch();
+    	}
     	
-    	render();
+    	return books;
+    }
+    public static void search(String keyword) {
+    	Book book = null;
+    	List<Book> books = null;
+    	if(keyword!=null && keyword.length()>0) {
+    		books = getSearchResults(keyword);
+    	}else {
+    		books = Book.find("order by publishDate desc").fetch();
+    	}
+    	book = books.get(0);
+    	render(books,book);
     }
     
     public static void addReview(Long bookId,@Required String author,@Required String content) {
