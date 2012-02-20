@@ -87,3 +87,89 @@ form label {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
 }
+
+.reviews {
+    margin-bottom: 30px;
+}
+
+.review {
+    width: 70%;
+    clear: both;
+}
+
+.review .review-metadata {
+    color: #869AB1;
+    display: block;
+    font-size: 50%;
+    display: block;
+    float: left;
+    width: 80px;
+    text-align: right;
+}
+
+.review .review-author {
+    font-size: 150%;
+    font-weight: bold;
+    display: block;
+}
+
+.review .review-content {
+    position: relative;
+    background: #E4EAFF;
+    color: #242C58;
+    font-size: 80%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 100px;
+    padding: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+.review .review {
+    text-indent: -999em;
+    display: block;
+    width: 0; 
+    height: 0; 
+	border-top: 10px solid transparent; 
+	border-bottom: 10px solid transparent;
+	border-right: 10px solid #E4EAFF;
+	border-left: 0;
+	position: absolute;
+	top: 4px;
+	left: -4px;
+}
+
+
+/** search **/
+.searchresultdescription{
+	font-weight: bold;
+	border:solid 1px #45597A;
+}
+
+/** moved error class out of form **/
+.error {
+    background: #c00;
+    color: #fff;
+    font-size: 90%;
+    padding: 3px 5px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 2px 0 #800;
+}
+
+.errormsg {
+    color: #c00;
+    font-size: 90%;
+    font-weight: bold;
+    padding: 3px 5px;
+}
+
+.success {
+    background: #67AD10;
+    color: #fff;
+    padding: 10px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-box-shadow: 0 2px 0 #4E840B; 
+}

@@ -3,3 +3,32 @@
 #
 
 currencycode=USD
+currencysymbol=$
+name=Name
+address=Address
+email=Email
+password=Password
+fullName=FullName
+isAdmin=User is Admin
+author=Author
+content=Content
+book=Book
+postedAt=Posted Date
+code=Code
+isbn=ISBN
+publishDate=Date of Publishing
+description=Description
+publisher=Publisher
+categories=Categories
+reviewadderror=Error adding Review!
+validation.required=%s is required
+validation.ccnum_minsz=Card Number should be of minimum %2$d digits
+validation.ccname = Cardholder's Name Required
+validation.ccmonth =Select Expiry Month 
+validation.ccyear = Select Expiry Year
+validation.cctype = Select Credit Card Type
+
+validation.addressline1=Address Line1 Required
+validation.state = Sate Required
+validation.country = Select Country  
+checkout_link=checkout

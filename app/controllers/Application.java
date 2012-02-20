@@ -69,8 +69,19 @@ public class Application extends Controller {
     }
     
     public static void addReview(Long bookId,@Required String author,@Required String content) {
+    	Book book = Book.findById(bookId);
+    	if(validation.hasErrors()) {
+    		params.flash();//the parameters are added to flash to display in the textfields
+    		validation.keep();//keep the errors collection for the next request
+    		//render("Application/details.html",book,books);
+    		details(bookId);
+    	}
+    	book.addReview(author, content);
     	
-    	render();
+    	flash.success("Thanks for your review, %s!", author);//success msg put in flash
+    	System.out.println("add review success");
+    	//render("Application/details.html",book,books);
+    	details(bookId);
     }
 
 }

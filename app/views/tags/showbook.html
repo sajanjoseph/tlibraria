@@ -49,51 +49,52 @@
 					,latest by ${_book.reviews[_book.reviews.size()-1].author}
 			
 				#{/if}
-	</span>
-			
+			</span>
 			<div class="reviews">
-				 #{list items:_book.reviews,as:'review'}
-					 	<div class="review">
-						 	<div class="review-metadata">
-						 		<span class="review-author">by ${review.author}</span>
-						 		<span class="review-date">${review.postedAt.format("dd MMMM yyyy")}</span>
-						 	</div>
-						 	<div class="review-content">
-						 		
-						 		${review.content.escape().nl2br()}
-						 	</div>
-					 	</div>
-				 #{/list}
+			 #{list items:_book.reviews,as:'review'}
+			 	<div class="review">
+				 	<div class="review-metadata">
+				 		<span class="review-author">by ${review.author}</span>
+				 		<span class="review-date">${review.postedAt.format("dd MMMM yyyy")}</span>
+				 	</div>
+				 	<div class="review-content">
+				 		
+				 		${review.content.escape().nl2br()}
+				 	</div>
+			 	</div>
+			 #{/list}
 			</div>
-			#{if flash.success}
-				<p class="success">${flash.success}</p>
-			#{/if}
-			<div class="addreviewform">
-				<a href="#" class="showaddreviewformlink"><img src="@{'/public/images/addreview-small.png'}"/>add a review for ${_book.name}</a>
-				<a href="#" class="hideaddreviewformlink">hide reviewform</a>
+#{if flash.success}
+<p class="success">${flash.success}</p>
+#{/if}
+<div class="addreviewform">
+<a href="#" class="showaddreviewformlink"><img src="@{'/public/images/addreview-small.png'}"/>add a review for ${_book.name}</a>
+<a href="#" class="hideaddreviewformlink">hide reviewform</a>
 	#{ifErrors}
 			<p class="error">
-			#{errors}
-				    ${error}<br/>
-			#{/errors}
+				&{'reviewadderror'}
 	        </p>
 	 #{/ifErrors}
-	 
-		<div class="reviewform">
-		#{form @Application.addReview(_book.id)}
-			<p>
-				<label for="author">Your Name:</label>
-				<input type="text" name="author" id="author" value="${params.author}"/>
-			</p>
-			 <p>
-		        <label for="content">Your message: </label>
-		        <textarea name="content" id="content" >${params.content}</textarea>
-		    </p>
-		    <p>
-		        <input type="submit" value="Add your review" />
-		    </p>
-		#{/form}
-		</div>
-</div>
-		#{/else}
+	<div class="reviewform">
+	#{form @Application.addReview(_book.id)}
+	
+		
+		<p>
+			<label for="author">Your Name:</label>
+			<input type="text" name="author" id="author" value="${flash.author}"/>
+			#{ifError 'author'}<span class="error">#{error 'author'/}</span>#{/ifError}
+		</p>
+		 <p>
+	        <label for="content">Your message: </label>
+	        <textarea name="content" id="content" >${flash.content}</textarea>
+	        #{ifError 'content'}<span class="error">#{error 'content'/}</span>#{/ifError}
+	    </p>
+	    <p>
+	        <input type="submit" value="Add your review" />
+	    </p>
+	#{/form}
+	</div>
+	</div>
+				
+	#{/else}
 </div>

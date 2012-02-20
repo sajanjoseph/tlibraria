@@ -19,7 +19,22 @@
     waitForPageToLoad(1000)
     assertTitle('Home')
     type('keyword','magic')
-    click('kwsearch')
-    waitForPageToLoad(4000)
+    clickAndWait('kwsearch')
     assertTitle('search results')
+    assertTextPresent('Wizard and Glass (The Dark Tower, Book 4)')
+    assertTextPresent('The Winter King (The Arthur Books 1)')
+    assertTextPresent('Harry Potter and the Chamber of Secrets')
+    assertTextPresent('Harry Potter and the Prisoner of Azkaban')
+#{/selenium}
+
+#{selenium 'search with a keyword not in book'}
+	clearSession()
+    // Open the home page, and check that no error occured
+    open('/')
+    waitForPageToLoad(1000)
+    assertTitle('Home')
+    type('keyword','23444')
+    clickAndWait('kwsearch')
+    assertTitle('search results')
+    assertTextPresent('could not find books with name containing '23444' here')
 #{/selenium}
