@@ -35,6 +35,22 @@ body {
 }
 
 
+/* footer */
+
+#footer {
+    border-top: 1px solid #45597A;
+    font-size: 80%;
+    padding: 10px 30px;
+    text-align: center;
+    color: #869AB1;
+    margin-top: 30px;
+}
+
+#footer a {
+    color: #869AB1;
+    font-weight: bold;
+}
+
 /**Forms **/
 form p {
     margin: 5px 0 0 0;

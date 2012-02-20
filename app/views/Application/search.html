@@ -7,6 +7,7 @@
 #{/if}
 
 #{if books &&  books.size()>0}
+	The following books contain '${trimmedKeyword}' in title or description.
 	#{list items:books, as:'abook'}
 		
 		#{showbook book:abook, as:'concise' /}
@@ -17,7 +18,7 @@
 
 #{else}
 	<div class="empty">
-         could not find  books  with name containing '${keyword}' here.
+         could not find  books  with name containing '${trimmedKeyword}' here.
     </div>
 #{/else}
 <div id="footer">

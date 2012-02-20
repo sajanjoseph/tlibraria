@@ -49,11 +49,11 @@ public class Application extends Controller {
     }
     
     public static void search(String keyword) {
-    	System.out.println("keyword="+keyword);
     	Book book = null;
+    	String trimmedKeyword =null;
     	List<Book> books = null;
     	if(keyword!=null && keyword.length()>0) {
-    		String trimmedKeyword = keyword.trim().toLowerCase();
+    		trimmedKeyword = keyword.trim().toLowerCase();
         	String pattern = "%"+trimmedKeyword+"%";
         	String query="select b from Book b where (lower(name) like :pattern or lower(description) like :pattern) order by b.publishDate desc";
         	
@@ -65,7 +65,7 @@ public class Application extends Controller {
     	if(books !=null && books.size()>0) {
     		book = books.get(0);
     	}
-    	render(books,book);
+    	render(books,book,trimmedKeyword);
     }
     
     public static void addReview(Long bookId,@Required String author,@Required String content) {
