@@ -49,6 +49,7 @@ public class Application extends Controller {
     }
     
     public static void search(String keyword) {
+    	System.out.println("keyword="+keyword);
     	Book book = null;
     	List<Book> books = null;
     	if(keyword!=null && keyword.length()>0) {

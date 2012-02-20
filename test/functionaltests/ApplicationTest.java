@@ -33,8 +33,33 @@ public class ApplicationTest extends FunctionalTest {
 		assertNotNull(renderArgs("books"));
 		List<Book> books = (List<Book>) renderArgs("books");
 		assertEquals(3,books.size());
-		
-		
+	}
+	
+	@Test
+	public void testSearchNormal() {
+		Fixtures.loadModels("data.yml");
+		Response response = GET("/books/magic");
+		assertNotNull(renderArgs("books"));
+		List<Book> books = (List<Book>) renderArgs("books");
+		assertEquals(4,books.size());
+	}
+	
+	@Test
+	public void testSearchUppercase() {
+		Fixtures.loadModels("data.yml");
+		Response response = GET("/books/HOGWARTS");
+		assertNotNull(renderArgs("books"));
+		List<Book>books = (List<Book>) renderArgs("books");
+		assertEquals(3,books.size());
+	}
+	
+	@Test
+	public void testSearchMixedcase() {
+		Fixtures.loadModels("data.yml");
+		Response response = GET("/books/HOGwarts");
+		assertNotNull(renderArgs("books"));
+		List<Book>books = (List<Book>) renderArgs("books");
+		assertEquals(3,books.size());
 	}
 
 }

@@ -11,3 +11,15 @@
     assertTitle('Home')
     assertTextPresent('Taberna Libraria')
 #{/selenium}
+
+#{selenium 'search with a keyword'}
+	clearSession()
+    // Open the home page, and check that no error occured
+    open('/')
+    waitForPageToLoad(1000)
+    assertTitle('Home')
+    type('keyword','magic')
+    click('kwsearch')
+    waitForPageToLoad(4000)
+    assertTitle('search results')
+#{/selenium}
