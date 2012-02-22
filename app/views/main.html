@@ -17,7 +17,17 @@
     			<h3> ${shopLogoText} </h3>
     		</div>
     	</div>
-    
+    	<div class="auth">
+    		
+    		#{if session.loggedinuser}
+    			<a href="@{Secure.logout()}">Log out</a>
+    		#{/if}
+    		#{else}
+    			<a href="@{Admin.index()}">Go to Admin Area</a><br/><br/>
+    		#{/else}
+    	</div>
+    	
+    	#{loginStatus /}
         #{doLayout /}
     </body>
 </html>

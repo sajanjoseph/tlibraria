@@ -62,8 +62,6 @@ public class BookTests extends UnitTest {
     	
     	//total 3 reviews
     	assertEquals(3,Review.count());
-    	
-    	
 	}
 	
 	@Test

@@ -8,7 +8,7 @@
 
 #{if books &&  books.size()>0}
 <p>
-	<span class="searchresultdescription">The following books contain '${trimmedKeyword}' in title or description</span>
+	<span class="boxed">The following books contain '${trimmedKeyword}' in title or description</span>
 </p>
 	#{list items:books, as:'abook'}
 		
@@ -21,7 +21,7 @@
 #{else}
 	<div class="empty">
 	<p>
-         <span class="searchresultdescription">could not find  books  with name containing '${trimmedKeyword}' here</span>
+         <span class="boxed">could not find  books  with name containing '${trimmedKeyword}' here</span>
     </p>
     </div>
 #{/else}

@@ -61,5 +61,5 @@ public class ApplicationTest extends FunctionalTest {
 		List<Book>books = (List<Book>) renderArgs("books");
 		assertEquals(3,books.size());
 	}
-
+	
 }

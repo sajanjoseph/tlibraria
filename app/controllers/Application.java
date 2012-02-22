@@ -17,6 +17,7 @@ public class Application extends Controller {
 	}
 
     public static void index() {
+    	System.out.println("Application.index()");
     	Book book = null;
     	List<Book> books = Book.find("order by PublishDate desc").fetch();
     	if(books.size()>0) {

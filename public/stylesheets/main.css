@@ -142,7 +142,7 @@ form label {
 
 
 /** search **/
-.searchresultdescription{
+.boxed{
 	font-weight: bold;
 	border:solid 1px #45597A;
 }
@@ -161,7 +161,6 @@ form label {
 .errormsg {
     color: #c00;
     font-size: 90%;
-    font-weight: bold;
     padding: 3px 5px;
 }
 

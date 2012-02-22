@@ -1,10 +1,9 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
-
 # Home page
 GET     /                                       Application.index
-
+GET     /books/dummy                            Account.dummy
 GET     /books/category/{category}              Application.listTagged
 GET     /books/{<[0-9]+>bookId}                 Application.details
 GET     /books/{keyword}                        Application.search
@@ -14,5 +13,7 @@ GET     /favicon.ico                            404
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
+*       /                                       module:secure
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
+

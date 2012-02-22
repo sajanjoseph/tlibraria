@@ -1,0 +1,8 @@
+<div class="loginStatus">
+#{if session.loggedinuser}
+<span class="boxed">Welcome ${session.loggedinuser}!</span>
+#{/if}
+#{else}
+<span class="boxed errormsg">you are not logged in</span>
+#{/else}
+</div>

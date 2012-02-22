@@ -38,3 +38,58 @@
     assertTitle('search results')
     assertTextPresent('could not find books with name containing '23444' here')
 #{/selenium}
+
+#{selenium 'add review to book'}
+	clearSession()
+	open('/')
+	waitForPageToLoad(1000)
+    assertTitle('Home')
+    type('author','den')
+    type('content','my first review')
+    clickAndWait('reviewsubmit')
+    assertTextPresent('Thanks for your review')
+    assertTextPresent('my first review')
+#{/selenium}
+
+#{selenium 'missing author field in addreview'}
+	clearSession()
+	open('/')
+	waitForPageToLoad(1000)
+    assertTitle('Home')
+    type('content','my second review')
+    clickAndWait('reviewsubmit')
+    assertTextPresent('Error adding Review!')
+#{/selenium}
+
+#{selenium 'missing content field in addreview'}
+	clearSession()
+	open('/')
+	waitForPageToLoad(1000)
+    assertTitle('Home')
+    type('author','jim')
+    clickAndWait('reviewsubmit')
+    assertTextPresent('Error adding Review!')
+#{/selenium}
+
+#{selenium 'both fields missing in addreview'}
+	clearSession()
+	open('/')
+	waitForPageToLoad(1000)
+    assertTitle('Home')
+    clickAndWait('reviewsubmit')
+    assertTextPresent('Error adding Review!')
+#{/selenium}
+
+#{selenium 'admin access need login'}
+	clickAndWait('link=Go to Admin Area')
+	assertTitle('Login')
+	type('username','admin@bookshop.com')
+	type('password','bookshopadmin')
+	clickAndWait('signin')
+	assertTitle('Administration')
+	assertTextPresent('Taberna Libraria administration')
+	assertTextPresent('Welcome BookshopAdmin')
+	clickAndWait('link=Log out')
+
+	
+#{/selenium}
