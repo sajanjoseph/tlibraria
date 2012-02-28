@@ -1,0 +1,14 @@
+#{extends 'main.html'/}
+#{set title: 'checkout form'/}
+<div id="carttrack" class="centertop">
+<img src="@{'/public/images/carttrackaddress.png'}"/>	   
+</div>
+<h3>shopping cart for ${customer.fullName}</h3>
+
+#{shoppingcartview customer:customer,cart:cart/}
+#{if cart?.cartItems}
+	#{addressform customer:customer,latestaddress:latestAddress, nextpage:paymentpage /}
+#{/if}
+<div id="footer">
+	<a href="@{Application.index()}" > Home </a>
+</div>

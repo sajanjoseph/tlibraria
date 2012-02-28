@@ -1,6 +1,9 @@
 package models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 import play.data.validation.Required;
 import play.db.jpa.Model;
@@ -22,10 +25,16 @@ public class Address extends Model {
 	public String phoneNumber;
 	
 	@Required
-	public String country; 
+	public String country;
+	
+	public Date dateOfSubmit;
+	
+	@ManyToOne
+	public BookShopUser bookshopuser;
 
 	public Address() {
 		super();
+		dateOfSubmit = new Date();
 	}
 	
 	public Address(String addressLine1, String addressLine2, String city,
@@ -38,6 +47,7 @@ public class Address extends Model {
 		this.pincode = pincode;
 		this.phoneNumber = phoneNumber;
 		this.country = country;
+		this.dateOfSubmit = new Date();
 	}
 	
 	@Override

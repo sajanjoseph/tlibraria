@@ -81,6 +81,8 @@
 #{/selenium}
 
 #{selenium 'admin access need login'}
+	clearSession()
+	open('/')
 	clickAndWait('link=Go to Admin Area')
 	assertTitle('Login')
 	type('username','admin@bookshop.com')
@@ -90,6 +92,88 @@
 	assertTextPresent('Taberna Libraria administration')
 	assertTextPresent('Welcome BookshopAdmin')
 	clickAndWait('link=Log out')
-
 	
+#{/selenium}
+
+#{selenium 'admin cannot buy'}
+	clearSession()
+	open('/')
+	clickAndWait('link=Go to Admin Area')
+	assertTitle('Login')
+	type('username','admin@bookshop.com')
+	type('password','bookshopadmin')
+	clickAndWait('signin')
+	assertTitle('Administration')
+	open('/')
+	assertTitle('Home')
+	assertTextNotPresent('you can buy')
+	assertElementNotPresent(id=addtominicart)
+	clickAndWait('link=Log out')
+#{/selenium}
+
+#{selenium 'customer can add and remove items in cart'}
+	clearSession()
+	open('/')
+	assertTitle('Home')
+	assertTextPresent('you are not logged in')
+	clickAndWait('link=Login to buy Wizard and Glass (The Dark Tower, Book 4)')
+	assertTitle('Login')
+	type('username','denny@gmail.com')
+	type('password','denny')
+	clickAndWait('signin')
+	assertTitle('Home')
+	assertTextPresent('your cart is empty')
+	select('quantity','3')
+	clickAndWait('addtominicart')
+	assertTextPresent('your cart has')
+	assertTextPresent('Wizard and Glass (The Dark Tower, Book 4) 3 copies')
+	assertElementPresent(id=removecartitem)
+	clickAndWait('removecartitem')
+	
+	assertTextPresent('your cart is empty')
+	clickAndWait('link=Log out')
+#{/selenium}
+
+#{selenium 'checkout page shows correct cart contents'}
+	clearSession()
+	open('/')
+	assertTitle('Home')
+	clickAndWait('link=Login to buy Wizard and Glass (The Dark Tower, Book 4)')
+	assertTitle('Login')
+	type('username','denny@gmail.com')
+	type('password','denny')
+	clickAndWait('signin')
+	assertTitle('Home')
+	assertTextPresent('your cart is empty')
+	select('quantity','3')
+	clickAndWait('addtominicart')
+	clickAndWait('link=checkout')
+	assertTitle('checkout form')
+	assertTextPresent('Wizard and Glass (The Dark Tower, Book 4)')
+	assertTextPresent('SUBTOTAL = $ 26.97')
+	clickAndWait('link=Log out')
+#{/selenium}
+
+#{selenium 'customer can edit/remove cartitem in checkout page'}
+	clearSession()
+	open('/')
+	assertTitle('Home')
+	clickAndWait('link=Login to buy Wizard and Glass (The Dark Tower, Book 4)')
+	assertTitle('Login')
+	type('username','denny@gmail.com')
+	type('password','denny')
+	clickAndWait('signin')
+	assertTitle('Home')
+	
+	clickAndWait('link=checkout')
+	assertTitle('checkout form')
+	assertTextPresent('Wizard and Glass (The Dark Tower, Book 4)')
+	assertTextPresent('SUBTOTAL = $ 26.97')
+	select('quantity','1')
+	clickAndWait(id=editcartitem)
+	assertTextPresent('SUBTOTAL = $ 8.99')
+	clickAndWait(id=removecartitem)
+	assertTitle('Home')
+	assertTextPresent('your cart is empty')
+	clickAndWait('link=Log out')
 #{/selenium}

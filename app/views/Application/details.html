@@ -2,6 +2,7 @@
 #{set title:'book details' /}
 
 #{if book}
+	#{showminicart book:book,customer:customer,cart:cart/}
 	
 	#{showbook book:book,as: 'full' /}
 #{/if}

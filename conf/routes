@@ -10,6 +10,22 @@ GET     /books/{keyword}                        Application.search
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
+#login,logout
+GET     /login                                  Secure.login
+GET     /logout                                 Secure.logout
+
+
+POST /books/addtocart/{<[0-9]+>bookId}          Account.addItemToCart
+POST /books/removefromcart/{<[0-9]+>cartId}     Account.removeItemFromCart
+GET /books/checkout/{<[0-9]+>customerId}        Account.showCheckoutForm
+POST /books/editcartitem/{<[0-9]+>cartId}       Account.editCartItem
+
+POST /books/address/{<[0-9]+>customerId}        Account.setCustomerAddressDetails
+
+GET /books/payment/{<[0-9]+>customerId}         Account.showPaymentForm
+POST /books/payment/{<[0-9]+>customerId}        Account.setPaymentDetails
+POST /books/payment/add/{<[0-9]+>customerId}    Account.addNewPaymentDetails
+
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 

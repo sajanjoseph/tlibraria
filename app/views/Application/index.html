@@ -2,10 +2,10 @@
 #{set title:'Home' /}
 
 #{if book}
-	
+	#{showminicart book:book,customer:customer,cart:cart/}
 	#{showbook book:book, as:'full' /}
 #{/if}
-<a href="@{Account.dummy()}">dummy</a>
+
 <div id="search">
 	#{form @Application.search(keyword)}
 	<p>

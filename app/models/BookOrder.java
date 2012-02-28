@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
@@ -18,7 +19,7 @@ import utils.TaxCalculator;
 @Entity
 public class BookOrder extends Model {
 	
-	@OneToMany( cascade=CascadeType.ALL,orphanRemoval=true)
+	@OneToMany( cascade=CascadeType.ALL,orphanRemoval=true,fetch=FetchType.EAGER)
 	public Set<CartItem> cartItems;
 
 	public Status status;

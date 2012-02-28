@@ -1,0 +1,134 @@
+#{extends 'main.html'/}
+#{set title: 'payment form'/}
+
+<div id="carttrack" class="centertop">
+<img src="@{'/public/images/carttrackpayment.png'}"/>	   
+</div>
+
+<div class="paymentoptions">
+	#{paymentOptions customer:customer,nextpage:orderconfirmpage/}
+	#{ifErrors}
+		<div id="error">
+			<p class="error">
+			#{errors}
+				${error}<br/>
+			#{/errors}
+		       </p>
+		</div>
+	#{/ifErrors}
+	
+	<div id="new-methods-list">
+        <h1 id="other-payment-options">Payment options</h1>
+
+       <!-- CREDIT CARDS -->
+       <div class="payment-method" id="cc">
+	        <img class="logo" src="@{'/public/images/credit-cards.gif'}" alt=""/>
+	        <h2>Credit or Debit Cards</h2>
+	
+	        <div class="create">
+	          <h3>
+	            Enter your card information:
+	          </h3>
+			</div>
+		</div>
+	</div>
+		
+		#{form @Account.addNewPaymentDetails(customer.id)}
+			
+          <table class="new" id="new-cc">
+            <tr>
+              <th><label for="creditCardNumber">Card number</label></th>
+              <th><label for="ccname">Name on card</label></th>
+
+              <th><label for="expirationmonthandyear">Expiration date</label></th>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" id="creditCardNumber" name="newCreditCardNumber" value="${flash.newCreditCardNumber}" autocomplete="off" class="required" minlength="14" />
+                
+                
+                <input type="hidden" name="customerId" value="${customer.id}" >
+              </td>
+
+              <td>
+                <input type="text" id="ccname" name="newCCName" value="${flash.newCCName}" size="20" class="required"  minlength="4" />
+              </td>
+              <td id="expirationmonthandyear">
+                <select name="newCCExpMonth" id="ccmonth" title="expiration month">
+                  <option value="${flash.newCCExpMonth}"> ${flash.newCCExpMonth}</option>
+                  <option value="1">01</option>
+                  <option value="2">02</option>
+                  <option value="3">03</option>
+
+                  <option value="4">04</option>
+                  <option value="5">05</option>
+                  <option value="6">06</option>
+                  <option value="7">07</option>
+                  <option value="8">08</option>
+                  <option value="9">09</option>
+
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                
+
+                <select name="newCCExpYear" id="ccyear" title="expiration year">
+                  <option value="${flash.newCCExpYear}"> ${flash.newCCExpYear}</option>	
+                  <option value="2011">2011</option>
+
+                  <option value="2012">2012</option>
+                  <option value="2013">2013</option>
+                  <option value="2014">2014</option>
+                  <option value="2015">2015</option>
+                  <option value="2016">2016</option>
+                  <option value="2017">2017</option>
+
+                  <option value="2018">2018</option>
+                  <option value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+                  <option value="2029">2029</option>
+
+                  <option value="2030">2030</option>
+                  <option value="2031">2031</option>
+                </select>
+                
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <select name="newCCType" id="cctype" title="select card type">
+                        <option value="${flash.newCCType}"> ${flash.newCCType}</option>	
+						<option value='MasterCard'>MasterCard</option>
+						<option value='Discover'>Discover</option>
+						<option value='JCB'>JCB</option>
+						<option value='Diners Club'>Diners Club</option>
+						<option value='American Express'>American Express</option>
+						<option value='Visa'>Visa</option>
+                </select>
+                 
+              </td>
+              <td colspan="3" style="text-align:right">
+                <input type="submit" value="add your card" />
+              </td>
+
+            </tr>
+          </table>
+          
+		#{/form}
+</div>
+
+
+<div id="footer">
+	<a href="@{Application.index()}" > Home </a>
+</div>
+

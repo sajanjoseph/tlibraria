@@ -1,0 +1,60 @@
+<div class="shoppingcartview">
+#{if _customer?.isCustomer}
+	<div class="cartitems">
+		#{list items:_cart?.cartItems, as:'cartitem'}
+			#{form @Account.editCartItem(_cart.id)}
+			<li>${cartitem_index}. ${cartitem.book.name}
+				<select id="quantity" name="quantity">
+				<option selected="" value="${cartitem.quantity}">${cartitem.quantity}</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+				<option value="13">13</option>
+				<option value="14">14</option>
+				<option value="15">15</option>
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+				<option value="19">19</option>
+				<option value="20">20</option>
+				<option value="21">21</option>
+				<option value="22">22</option>
+				<option value="23">23</option>
+				<option value="24">24</option>
+				<option value="25">25</option>
+				<option value="26">26</option>
+				<option value="27">27</option>
+				<option value="28">28</option>
+				<option value="29">29</option>
+				<option value="30">30</option>
+				</select>
+				<input type="hidden" name="cartItemId" value="${cartitem.id}"/>
+			     <input type="submit" id="editcartitem" value="edit"/>
+			     cop${cartitem.quantity.pluralize('y','ies')}
+			     
+			     <span class="price">
+				 	${cartitem.book.price.formatCurrency(messages.get('currencycode')).raw()}X${cartitem.quantity} total=${cartitem.cartItemPrice.formatCurrency(messages.get('currencycode')).raw()}
+				</span>
+			 #{/form}
+			 #{form @Account.removeItemFromCart(_cart.id)}
+		    	<input type="hidden" name="cartItemId" value="${cartitem.id}"/>
+				<input type="submit" class="right" id="removecartitem" value="remove"/>	
+		    #{/form}
+			</li>
+		#{/list}
+	</div>
+	<div class="subtotal">
+		    	SUBTOTAL = ${_cart.totalPrice.formatCurrency(messages.get('currencycode')).raw()}
+	 </div>
+
+#{/if}
+</div>

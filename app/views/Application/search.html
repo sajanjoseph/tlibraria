@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'search results' /}
 #{if book}
-	
+	#{showminicart book:book,customer:customer,cart:cart/}
 	
 	#{showbook book:book,as: 'full' /}
 #{/if}

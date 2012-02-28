@@ -1,6 +1,7 @@
 #{extends 'main.html'/}
 
 #{if book}
+	#{showminicart book:book,customer:customer,cart:cart/}
 	
 	#{showbook book:book,as: 'full' /}
 #{/if}

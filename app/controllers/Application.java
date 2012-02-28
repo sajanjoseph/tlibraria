@@ -4,6 +4,7 @@ import play.*;
 import play.cache.Cache;
 import play.data.validation.Required;
 import play.mvc.*;
+import utils.Status;
 
 import java.util.*;
 
@@ -14,6 +15,37 @@ public class Application extends Controller {
 	@Before
 	public static void addDefaults() {
 		renderArgs.put("shopLogoText",Play.configuration.getProperty("bookshop.logotext"));
+	}
+	
+	@Before
+	static void storeLoggedInUserAndCart() {
+		if(Security.isConnected()) {
+            BookShopUser user = BookShopUser.find("byEmail", Security.connected()).first();
+            renderArgs.put("customer", user);
+            System.out.println("Account:storeUserIfLoggedIn()::"+user.email+" put as customer");
+            BookOrder lastorder = getPendingOrder(user);
+            
+            if(lastorder == null) {
+            	lastorder = new BookOrder(user);
+            	lastorder.save();
+            	System.out.println("Account:storeUserIfLoggedIn()::created a new order:"+lastorder.id);
+            }else {
+            	System.out.println("Account:storeUserIfLoggedIn()::existing pendOrder:"+lastorder.id +" retrieved from db");
+            }
+            renderArgs.put("cart", lastorder);
+            System.out.println("Account:storeUserIfLoggedIn()::cart with items:"+lastorder.cartItems.size()+" put as lastorder");
+		}
+	}
+	
+	private static BookOrder getPendingOrder(BookShopUser customer) {
+		String query = "select o from BookOrder o where o.status=:status and o.customer =:customer order by o.order_date DESC,o.id DESC";
+		 //BookOrder lastorder = BookOrder.find("select o from BookOrder o where o.status='pending' and o.customer =? order by o.order_date DESC,o.id DESC",customer).first();
+		BookOrder lastorder = BookOrder.find(query).bind("status",Status.PENDING).bind("customer", customer).first();
+		if(lastorder!=null) {
+			lastorder.refresh();//state refreshed
+		}
+		System.out.println("controllers.Account.getPendingOrder():lastorder="+lastorder);
+		return lastorder;
 	}
 
     public static void index() {
