@@ -1,3 +1,16 @@
 <div class="paymentoptionsform" id="paymentoptions">
-
+	#{if _customer?.payments}
+		#{form @Account.setPaymentDetails(_customer.id)}
+			<h3>Select your card</h3>
+			#{list items:_customer.payments, as:'payment'}
+				<input type="radio" name="paymentId" value="${payment?.id}"${_customer.currentPayment?.id==payment?.id ? 'checked':''} />
+				<img src="@{'/public/images/' + payment?.cctype + '.png'}"></img>
+				${payment?.cctype}  as   ${payment?.name}   ${payment.creditCardNumber} expires on ${payment?.month}/${payment?.year}
+				</br>
+			#{/list}
+			<input type="submit" id="selectpaymentbtn" value="select payment"/>
+			<input type="hidden" name="customerId" value="${_customer.id}"/>
+			<input type="hidden" name="nexturl" value="${_nextpage}" />
+		#{/form}
+	#{/if}
 </div>

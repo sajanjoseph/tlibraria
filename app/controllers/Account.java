@@ -197,6 +197,7 @@ public class Account extends Controller {
 	public static void showPaymentForm(Long customerId) {
 		System.out.println("showPaymentForm():: customerid="+customerId);
 		BookShopUser customer = BookShopUser.findById(customerId);
+		System.out.println("showPaymentForm():: customer has ="+customer.payments.size()+" payments");
 		BookOrder cart = getPendingOrder(customer);
 		if(cart.cartItems.size()==0) {//if cart empty go to Home page
 			System.out.println("showPaymentForm():: calling Application.index()");
@@ -237,6 +238,48 @@ public class Account extends Controller {
 		System.out.println("addNewPaymentDetails()::new payment method");
 		customer.payments.add(payment);
 		customer.save();
+		System.out.println("addNewPaymentDetails()::customer  has:"+customer.payments.size()+" payments");
+		
+		showPaymentForm(customerId);
+	}
+	
+	public static void showOrderConfirmPage(String nexturl,Long customerId) {
+		//WHY DO we need the nexturl????
+		
+		BookShopUser customer = BookShopUser.findById(customerId);
+		//if no items in cart go back to index
+		BookOrder cart = getPendingOrder(customer);
+		if(cart.cartItems.size()==0) {
+			Application.index();
+		}
+		if((customer.payments.size()==0) || (customer.currentPayment == null)){
+			System.out.println("showOrderConfirmPage():: empty payments or no selectedpayment");
+			showPaymentForm(customerId);
+		}
+		Map map = new HashMap();
+		map.put("customerId", customer.id);
+		String orderconfirmpage = Router.reverse("Account.showOrderConfirmPage",map).url;
+		System.out.println("Account::showOrderConfirmPage():confirmpage="+orderconfirmpage);
+		render(customer,orderconfirmpage);
+	}
+	public static void setPaymentDetails(Long customerId,String nexturl,@Required Long paymentId) {
+		System.out.println("setPaymentDetails():: nexturl="+nexturl);
+		if(validation.hasErrors()) {
+			System.out.println("setPaymentDetails():: validation errors!");
+			validation.keep();
+			Account.showPaymentForm(customerId);
+		}
+		BookShopUser customer = BookShopUser.findById(customerId);
+		Payment selected = Payment.findById(paymentId);
+		customer.currentPayment = selected;
+		customer.save();
+		System.out.println("setPaymentDetails():: cust currentpayment="+customer.currentPayment.id);
+		
+		BookOrder cart = getPendingOrder(customer);
+		cart.paymentMethod = selected;
+		cart.save();
+		System.out.println("setPaymentDetails():: cart.paymentMethod="+cart.paymentMethod.id);
+		redirect(nexturl);
 	}
 	
 	private static Payment findOrCreatePayment(BookShopUser customer,String name,String creditCardNumber,String month, String year, String cctype) {
@@ -244,7 +287,9 @@ public class Account extends Controller {
 		Payment payment = Payment.find(query).bind("bookshopuser", customer).bind("name", name).bind("creditCardNumber",creditCardNumber).bind("month", month).bind("year",year).bind("cctype",cctype).first();
 		if(payment==null) {
 			payment = new Payment(name,creditCardNumber,month,year,cctype);
+			payment.bookshopuser = customer;
 			payment.save();
+			System.out.println("findOrCreatePayment():: created new Payment");
 		}
 		return payment;
 	}

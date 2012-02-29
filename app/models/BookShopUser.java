@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -29,8 +31,11 @@ public class BookShopUser extends Model {
 	@OneToMany(mappedBy="bookshopuser",  cascade=CascadeType.ALL)
 	public List<Address> addresses;
 	
-	@OneToMany(mappedBy="bookshopuser", cascade=CascadeType.ALL,orphanRemoval=true)
+	@OneToMany(mappedBy="bookshopuser", cascade=CascadeType.ALL)
 	public Set<Payment> payments;
+	
+	@OneToOne
+	public Payment currentPayment;
 	
 	public boolean isAdmin;
 	
@@ -39,6 +44,7 @@ public class BookShopUser extends Model {
 	public BookShopUser() {
 		super();
 		this.payments = new HashSet<Payment>();
+		this.addresses = new ArrayList<Address>();
 	}
 	
 	public BookShopUser(String email, String password, String fullname) {
@@ -47,6 +53,7 @@ public class BookShopUser extends Model {
         this.password = password;
         this.fullName = fullname;
         this.payments = new HashSet<Payment>();
+        this.addresses = new ArrayList<Address>();
     }
 	
 	public String toString() {

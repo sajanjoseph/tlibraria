@@ -404,6 +404,27 @@ public class ApplicationTest extends FunctionalTest {
     	assertEquals(3, Payment.findAll().size());
     }
 	
+	@Test
+	public void testShowOrderConfirmPageWithoutPaymentSelected() {
+		Fixtures.loadModels("data.yml");
+		BookOrder dennyCart = loginAndShop("denny@gmail.com","denny");
+		BookShopUser denny = BookShopUser.find("byEmail","denny@gmail.com").first();
+		String showorderconfirmurl = "/books/orderconfirm/"+denny.id;
+		Response response = GET(showorderconfirmurl);
+		assertLocationRedirect("/books/payment/"+denny.id,response);
+	}
+	
+	@Test
+	public void testShowOrderConfirmPageWithEmptyCart() {
+		Fixtures.loadModels("data.yml");
+		Response response = loginAsUser("denny@gmail.com","denny");
+		assertLocationRedirect("/",response);
+		BookShopUser denny = BookShopUser.find("byEmail","denny@gmail.com").first();
+		String showorderconfirmurl = "/books/orderconfirm/"+denny.id;
+		Response showresponse = GET(showorderconfirmurl);
+		assertLocationRedirect("/",showresponse);
+	}
+	
 	private BookOrder loginAndShop(String email,String pass) {
 		BookShopUser user = BookShopUser.find("byEmail", email).first();
 		assertNotNull(user);

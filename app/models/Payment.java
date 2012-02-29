@@ -2,6 +2,7 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -27,6 +28,7 @@ public class Payment extends Model {
 	public String year;
 	@Required
 	public String cctype;
+	
 	
 	@ManyToOne
 	public BookShopUser bookshopuser;
