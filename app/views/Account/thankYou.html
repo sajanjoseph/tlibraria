@@ -1,0 +1,36 @@
+#{extends 'main.html'/}
+#{set title: 'thankyou'/}
+
+<div class="thankyou">
+	<span class="thankyouheading">
+		<h3>Thank you, your order has been placed</h3>
+	</span>
+	<span class="minorhead">
+		An e-mail confirmation has been sent to you. 
+	</span>
+	<div class="thankyoubody">
+	#{if cart?.cartItems}
+		<span class="ordernum">
+			Your order number :${cart?.orderNumber}
+		</span>
+		<br/>
+		<span class="orderitems">
+			${cart?.cartItems?.size() } item${cart?.cartItems?.size().pluralize()} will be shipped to :${customer.fullName}
+		</span>
+		<br/>
+		<span class="deliverydate">
+			Estimated delivery date:${estimatedDeliveryDate}
+		</span>
+		</div>
+		
+		#{form @Account.deleteBookOrder(cart?.id)}
+			<p class="delete">
+			<input type="submit" value="Delete Bookorder" />
+			</p>
+		#{/form}
+	
+	#{/if}
+</div>
+<div id="footer">
+	<a href="@{Application.index()}" > Home </a>
+</div>

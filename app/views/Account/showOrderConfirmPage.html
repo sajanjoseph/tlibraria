@@ -4,7 +4,51 @@
 <div id="carttrack" class="centertop">
 <img src="@{'/public/images/carttrackconfirm.png'}"/>	   
 </div>
+#{if cart?.cartItems}
+<h2>confirm order</h2>
 
+#{shoppingcartview customer:customer,cart:cart/}
+
+<a href="@{Application.index()}">want to add more items to cart?</a>
+
+
+*{...add tax and shipping charges and display total cost...}*
+<div id="extracharges">
+
+</div>
+
+#{addressform customer:customer, nextpage:orderconfirmpage,latestaddress:latestAddress /}
+
+*{...payment info display...}*
+<h3>you have chosen to pay using</h3>
+<img src="@{'/public/images/' + customer.currentPayment?.cctype + '.png'}"></img>  ${customer.currentPayment?.cctype}  as   ${customer.currentPayment?.name}   ${customer.currentPayment?.creditCardNumber} expires on ${customer.currentPayment?.month}/${customer.currentPayment?.year}
+
+<div class="paymentform">
+	<a href="#" class="showpaymentformlink">change payment method</a>
+	
+	<a href="#" class="hidepaymentformlink">hide payment options form</a>
+	
+	#{paymentOptions customer:customer,nextpage:orderconfirmpage/}
+	
+	<p>
+	<a href="@{Account.showPaymentForm(customer.id)}" class="paymentpagelink">add more payment options</a>
+	</p>
+</div>
+
+<div id="confirmordersubmit" class="confirmordersubmit" >
+#{form @Account.confirmOrder(customer.id) }
+<span class="confirmordersubmit">
+<input type="submit" value="PlaceOrder"/>
+</span>
+#{/form}
+
+</div>
+
+#{/if}
+
+#{else}
+ no cart or cart items
+#{/else}
 
 
 

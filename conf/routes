@@ -27,7 +27,7 @@ POST /books/payment/{<[0-9]+>customerId}        Account.setPaymentDetails
 POST /books/payment/add/{<[0-9]+>customerId}    Account.addNewPaymentDetails
 
 GET /books/orderconfirm/{<[0-9]+>customerId}    Account.showOrderConfirmPage
-
+POST /books/orderconfirm/{<[0-9]+>customerId}   Account.confirmOrder
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 

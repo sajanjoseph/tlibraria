@@ -38,7 +38,7 @@ public class Application extends Controller {
 	}
 	
 	private static BookOrder getPendingOrder(BookShopUser customer) {
-		String query = "select o from BookOrder o where o.status=:status and o.customer =:customer order by o.order_date DESC,o.id DESC";
+		String query = "select o from BookOrder o where o.status=:status and o.customer =:customer order by o.orderDate DESC,o.id DESC";
 		 //BookOrder lastorder = BookOrder.find("select o from BookOrder o where o.status='pending' and o.customer =? order by o.order_date DESC,o.id DESC",customer).first();
 		BookOrder lastorder = BookOrder.find(query).bind("status",Status.PENDING).bind("customer", customer).first();
 		if(lastorder!=null) {

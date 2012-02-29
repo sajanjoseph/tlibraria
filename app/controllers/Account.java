@@ -19,6 +19,7 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Router;
 import play.mvc.With;
+import utils.OrderUtils;
 import utils.PaymentUtils;
 import utils.Status;
 
@@ -61,7 +62,7 @@ public class Account extends Controller {
 	}
 	
 	private static BookOrder getPendingOrder(BookShopUser customer) {
-		String query = "select o from BookOrder o where o.status=:status and o.customer =:customer order by o.order_date DESC,o.id DESC";
+		String query = "select o from BookOrder o where o.status=:status and o.customer =:customer order by o.orderDate DESC,o.id DESC";
 		 //BookOrder lastorder = BookOrder.find("select o from BookOrder o where o.status='pending' and o.customer =? order by o.order_date DESC,o.id DESC",customer).first();
 		BookOrder lastorder = BookOrder.find(query).bind("status",Status.PENDING).bind("customer", customer).first();
 		if(lastorder!=null) {
@@ -153,11 +154,14 @@ public class Account extends Controller {
 		if ((customer.addresses.size()==0) || !(customer.addresses.contains(address)) ) {
 			customer.addresses.add(address);
 			customer.save();
+			System.out.println("Account:setCustomerAddressDetails()::customer.saved");
 		}
 		
-		if(nexturl!=null) {
+		if(nexturl!=null && nexturl.length()!=0) {
+			System.out.println("Account:setCustomerAddressDetails()::redirect to:"+nexturl);
 			redirect(nexturl);//
 		}else {
+			System.out.println("Account:setCustomerAddressDetails()::gotoLastView:");
 			gotoLastView();
 		}
 	}
@@ -243,25 +247,7 @@ public class Account extends Controller {
 		showPaymentForm(customerId);
 	}
 	
-	public static void showOrderConfirmPage(String nexturl,Long customerId) {
-		//WHY DO we need the nexturl????
-		
-		BookShopUser customer = BookShopUser.findById(customerId);
-		//if no items in cart go back to index
-		BookOrder cart = getPendingOrder(customer);
-		if(cart.cartItems.size()==0) {
-			Application.index();
-		}
-		if((customer.payments.size()==0) || (customer.currentPayment == null)){
-			System.out.println("showOrderConfirmPage():: empty payments or no selectedpayment");
-			showPaymentForm(customerId);
-		}
-		Map map = new HashMap();
-		map.put("customerId", customer.id);
-		String orderconfirmpage = Router.reverse("Account.showOrderConfirmPage",map).url;
-		System.out.println("Account::showOrderConfirmPage():confirmpage="+orderconfirmpage);
-		render(customer,orderconfirmpage);
-	}
+	
 	public static void setPaymentDetails(Long customerId,String nexturl,@Required Long paymentId) {
 		System.out.println("setPaymentDetails():: nexturl="+nexturl);
 		if(validation.hasErrors()) {
@@ -280,6 +266,56 @@ public class Account extends Controller {
 		cart.save();
 		System.out.println("setPaymentDetails():: cart.paymentMethod="+cart.paymentMethod.id);
 		redirect(nexturl);
+	}
+	
+	public static void showOrderConfirmPage(String nexturl,Long customerId) {
+		//WHY DO we need the nexturl????
+		System.out.println("showOrderConfirmPage("+customerId+"nexturl="+nexturl+")");
+		BookShopUser customer = BookShopUser.findById(customerId);
+		//if no items in cart go back to index
+		BookOrder cart = getPendingOrder(customer);
+		if(cart.cartItems.size()==0) {
+			Application.index();
+		}
+		if((customer.payments.size()==0) || (customer.currentPayment == null)){
+			System.out.println("showOrderConfirmPage():: empty payments or no selectedpayment");
+			showPaymentForm(customerId);
+		}
+		Address latestAddress = Address.find("bookshopuser = ? order by dateOfSubmit desc", customer).first();
+		
+		
+		Map map = new HashMap();
+		map.put("customerId", customer.id);
+		String orderconfirmpage = Router.reverse("Account.showOrderConfirmPage",map).url;
+		System.out.println("Account::showOrderConfirmPage():confirmpage="+orderconfirmpage);
+		System.out.println("Account::showOrderConfirmPage():render()");
+		render(customer,latestAddress);
+	}
+	
+	public static void confirmOrder(Long customerId) {
+		System.out.println("Account::confirmOrder():"+customerId);
+		BookShopUser customer = BookShopUser.findById(customerId);
+		BookOrder cart = getPendingOrder(customer);
+		//cart.orderDate = new Date();//??
+		cart.status=Status.CONFIRMED;
+		cart.orderNumber =  OrderUtils.createOrderNumberString(customer.email,cart.orderDate);
+		cart.save();
+		int estimatedWeeks=Integer.parseInt(Play.configuration.getProperty("WEEKS_TO_DELIVER"));
+		int estimatedDays=Integer.parseInt(Play.configuration.getProperty("DAYS_TO_DELIVER"));
+		
+		Date estimatedDeliveryDate = OrderUtils.incrementDate(cart.orderDate,estimatedWeeks, estimatedDays);
+		//EmailUtils.sendEmail(customer,cart,false);
+		render("Account/thankYou.html",customer,cart,estimatedDeliveryDate);
+	}
+	
+	/*
+	 * customer should be able to cancel a confirmed order
+	 */
+	public static void deleteBookOrder(Long id) {
+		BookOrder order = BookOrder.findById(id);
+		order.delete();
+		System.out.println("Account::deleteBookOrder():order="+order+" deleted");
+		Application.index();
 	}
 	
 	private static Payment findOrCreatePayment(BookShopUser customer,String name,String creditCardNumber,String month, String year, String cctype) {

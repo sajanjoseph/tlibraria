@@ -24,7 +24,7 @@ public class BookOrder extends Model {
 
 	public Status status;
 	
-	public Date order_date;
+	public Date orderDate;
 	
 	public String orderNumber;
 	
@@ -38,12 +38,12 @@ public class BookOrder extends Model {
 		this(new TreeSet<CartItem>(),null,Status.PENDING,new Date());
 	}
 	
-	public BookOrder(Set<CartItem> cartItems,BookShopUser customer,Status status,Date order_date) {
+	public BookOrder(Set<CartItem> cartItems,BookShopUser customer,Status status,Date orderDate) {
 		super();
 		this.cartItems = cartItems;
 		this.customer = customer;
 		this.status = status;
-		this.order_date = order_date;
+		this.orderDate = orderDate;
 	}
 	
 	public BookOrder(BookShopUser customer) {

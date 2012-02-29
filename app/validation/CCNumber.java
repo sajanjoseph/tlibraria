@@ -8,8 +8,8 @@ import java.lang.annotation.ElementType;
  
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER})
-@Constraint(checkWith = CCNumberCheck.class)
+@Constraint(checkWith = CCNumberLengthCheck.class)
 public @interface CCNumber {
-	String message() default CCNumberCheck.message;
+	String message() default CCNumberLengthCheck.message;
 	int value();
 }

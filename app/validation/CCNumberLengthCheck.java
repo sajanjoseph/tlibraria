@@ -7,7 +7,7 @@ import net.sf.oval.Validator;
 import net.sf.oval.context.OValContext;
 import net.sf.oval.exception.OValException;
 
-public class CCNumberCheck extends net.sf.oval.configuration.annotation.AbstractAnnotationCheck<CCNumber>{
+public class CCNumberLengthCheck extends net.sf.oval.configuration.annotation.AbstractAnnotationCheck<CCNumber>{
 	/** Error message key. */
     public final static String message = "validation.ccnum_minsz";
     int minSize;
@@ -22,11 +22,11 @@ public class CCNumberCheck extends net.sf.oval.configuration.annotation.Abstract
 	public boolean isSatisfied(Object validatedObject, Object value1, OValContext context,Validator validator) throws OValException {
 		requireMessageVariablesRecreation();
 		String param = value1.toString();
-		System.out.println("CCNumberCheck::isSatisfied():: param="+param+"="+param.length());
+		System.out.println("CCNumberLengthCheck::isSatisfied():: param="+param+"="+param.length());
 		String trimmed=param.trim();
-		System.out.println("CCNumberCheck::minSize="+minSize);
+		System.out.println("CCNumberLengthCheck::minSize="+minSize);
 		if(trimmed.length()< minSize) {
-			System.out.println("CCNumberCheck::trimmed.length()< minSize");
+			System.out.println("CCNumberLengthCheck::trimmed.length()< minSize");
 			return false;
 		}
 		return isNumber(trimmed);
