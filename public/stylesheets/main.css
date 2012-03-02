@@ -167,10 +167,58 @@ form label {
     -moz-border-radius: 10px;
 }
 
+
+
+
+/** order confirm page **/
+/** initially hide paymentoptionsform in order confirm form **/
+.paymentform .hidepaymentformlink{ display:none;}
+.paymentform .paymentoptionsform{ display:none;}
+.paymentform .paymentpagelink{ display:none;}
+
+.confirmordersubmit{
+	float:right;
+	padding: 10px;
+    background: #253142;
+    background: -webkit-gradient(linear, left top, left 60%, from(#253142), to(#364B66));
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+
+/** thankyou **/
+.thankyoubody{
+	padding: 10px;
+    background: #253142;
+    background: -webkit-gradient(linear, left top, left 60%, from(#253142), to(#364B66));
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+.delete input {
+	color: white;
+	border: none;
+	margin: 0;
+	
+	top: 0;
+	right: 0;
+	background: #C00;
+	padding: 2px 10px;
+	font-size: 90%;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	cursor: pointer;
+}
+
+
+/** common    **/
 .right{
 	align:right;
 }
 
+.center{
+	text-align: center;
+}
 .errormsg {
     color: #c00;
     font-size: 90%;
@@ -184,4 +232,43 @@ form label {
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -webkit-box-shadow: 0 2px 0 #4E840B; 
+}
+
+
+/** Admin **/
+.tags-list .tag {
+    cursor: pointer;
+    color: red;
+}
+
+#adminMenu {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+#adminMenu li {
+    display: inline;
+}
+
+#adminMenu li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 80%;
+    background: #591C64;
+    padding: 2px 10px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+}
+
+#adminMenu li.selected a {
+    background: #82A346;
+}
+
+.orderdetails{
+	padding: 10px;
+    background: #253142;
+    background: -webkit-gradient(linear, left top, left 60%, from(#253142), to(#364B66));
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
 }

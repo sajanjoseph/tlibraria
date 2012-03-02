@@ -28,7 +28,37 @@
     	<div id="main">
     		#{loginStatus /}
     		<ul id="adminMenu">
-    			
+    			#{secure.check 'admin'}
+    				<li class="${request.controller == 'Books' ? 'selected' : ''}">
+    					<a href="@{Books.list()}">Books</a>
+    				</li>
+    				
+    				<li class="${request.controller == 'Authors' ? 'selected' : ''}">
+    					<a href="@{Authors.list()}">Authors</a>
+    				</li>
+    				
+    				<li class="${request.controller == 'Publishers' ? 'selected' : ''}">
+    					<a href="@{Publishers.list()}">Publishers</a>
+    				</li>
+    				
+    				<li class="${request.controller == 'BookShopUsers' ? 'selected' : ''}">
+                		<a href="@{BookShopUsers.list()}">BookShopUsers</a>
+            		</li>
+            		
+            		<li class="${request.controller == 'Categories' ? 'selected' : ''}">
+                		<a href="@{Categories.list()}">Categories</a>
+            		</li>
+            		
+            		<li class="${request.controller == 'Reviews' ? 'selected' : ''}">
+                		<a href="@{Reviews.list()}">Reviews</a>
+                	</li>
+            		<li class="${request.controller == 'Admin' ? 'selected' : ''}">
+                		<a href="@{Admin.customerOrders()}">BookOrders</a>
+            		</li>
+            		<li >
+            			<a href="#">BookSalesData</a>
+            		</li>
+    			#{/secure.check}
     				
     			
     		</ul>

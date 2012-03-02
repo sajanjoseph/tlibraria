@@ -1,0 +1,51 @@
+#{extends 'admin.html'/}
+
+#{ifnot bookOrder?.id}
+	<h3><span>no order to edit</span></h3>
+#{/ifnot}
+
+<h3>${bookOrder?.status}</h3>
+
+<div class="orderdetails">
+	<p>
+	 <label>Order Number:</label> ${bookOrder?.orderNumber}<br/>
+	 <label>Order Date:</label> ${bookOrder?.orderDate}<br/>
+	 <label>Customer:</label> ${bookOrder?.customer?.email}<br/>
+	 <label>payment using:</label> ${bookOrder?.paymentMethod?.creditCardNumber}<br/>
+		 #{list items:bookOrder?.cartItems, as: 'cartitem'}
+		    <li>${cartitem_index}. ${cartitem?.book?.name} ${cartitem?.quantity} cop${cartitem?.quantity?.pluralize('y','ies')} 
+			</li> 
+		 #{/list}
+   </p>
+</div>
+
+#{ifnot  bookOrder?.status==utils.Status.PENDING}
+	<h3>Edit or Delete <span>this Order</span></h3>
+	
+	#{form @Admin.deleteBookOrder(bookOrder?.id)}
+		<p class="delete">
+		<input type="submit" id="deleteorderbtn" value="&{'delete.order.button.text'}" />
+		</p>
+	#{/form}
+	
+	#{form @Admin.editBookOrder(bookOrder?.id)}
+		 #{ifErrors}
+		        <div class="errormsg">
+		            #{errors}
+       					<li>${error}</li>
+   					#{/errors}
+		        </div>
+		 #{/ifErrors}
+			<p>
+		 		<label>Status:</label>
+		 		
+		 		#{select 'status', id:'status',items:utils.Status.values(),value:bookOrder?.status /}
+		 	</p>
+		 	<p>
+		        <input type="submit" value="&{'update.order.button.text'}" />
+		 	</p>
+	#{/form}
+	
+#{/ifnot}
+
+

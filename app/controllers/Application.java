@@ -23,17 +23,21 @@ public class Application extends Controller {
             BookShopUser user = BookShopUser.find("byEmail", Security.connected()).first();
             renderArgs.put("customer", user);
             System.out.println("Account:storeUserIfLoggedIn()::"+user.email+" put as customer");
-            BookOrder lastorder = getPendingOrder(user);
+            BookOrder lastorder = null;
             
-            if(lastorder == null) {
-            	lastorder = new BookOrder(user);
-            	lastorder.save();
-            	System.out.println("Account:storeUserIfLoggedIn()::created a new order:"+lastorder.id);
-            }else {
-            	System.out.println("Account:storeUserIfLoggedIn()::existing pendOrder:"+lastorder.id +" retrieved from db");
+            if (user.isCustomer) {
+            	lastorder = getPendingOrder(user);
+            
+	            if(lastorder == null) {
+	            	lastorder = new BookOrder(user);
+	            	lastorder.save();
+	            	System.out.println("Account:storeUserIfLoggedIn()::created a new order:"+lastorder.id);
+	            }else {
+	            	System.out.println("Account:storeUserIfLoggedIn()::existing pendOrder:"+lastorder.id +" retrieved from db");
+	            }
+	            renderArgs.put("cart", lastorder);
+	            System.out.println("Account:storeUserIfLoggedIn()::cart with items:"+lastorder.cartItems.size()+" put as lastorder");
             }
-            renderArgs.put("cart", lastorder);
-            System.out.println("Account:storeUserIfLoggedIn()::cart with items:"+lastorder.cartItems.size()+" put as lastorder");
 		}
 	}
 	

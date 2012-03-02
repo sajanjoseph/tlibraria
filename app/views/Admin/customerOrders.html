@@ -1,0 +1,13 @@
+#{extends 'admin.html'/}
+
+<div class="allorders">
+*{**** list all BookOrders ****}*
+
+#{list items:customerOrders,as:'customerOrder' }
+	<p >
+		<a href="@{Admin.showEditBookOrderForm(customerOrder.id)}">${customerOrder?.customer?.email} ${customerOrder?.orderDate}</a>
+	</p>
+#{/list}
+
+
+</div>

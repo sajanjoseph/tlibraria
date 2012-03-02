@@ -1,6 +1,10 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
+
+GET     /admin/?                                Admin.index
+*       /admin                                  module:crud
+
 # Home page
 GET     /                                       Application.index
 GET     /books/dummy                            Account.dummy

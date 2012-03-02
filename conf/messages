@@ -21,6 +21,8 @@ description=Description
 publisher=Publisher
 categories=Categories
 reviewadderror=Error adding Review!
+search.button.text=search for a word
+
 validation.required=%s is required
 validation.ccnum_minsz=Card Number should be of minimum %2$d digits
 validation.ccname = Cardholder's Name Required
@@ -28,7 +30,13 @@ validation.ccmonth =Select Expiry Month
 validation.ccyear = Select Expiry Year
 validation.cctype = Select Credit Card Type
 
+validation.payment_select = Select a Payment Method
 validation.addressline1=Address Line1 Required
 validation.state = Sate Required
 validation.country = Select Country  
 checkout_link=checkout
+
+delete.order.button.text=Delete Bookorder
+update.order.button.text=Update Bookorder
+403.message=You are not authorized to access that page!
+404.message=That Page was not found!

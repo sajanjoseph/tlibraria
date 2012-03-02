@@ -36,9 +36,9 @@ public class Account extends Controller {
 	
 	@Before
 	static void storeCurrentUrl() {
-		System.out.println("Account::storeCurrentUrl()");
+		//System.out.println("Account::storeCurrentUrl()");
 		if("GET".equals(request.method)) {
-			System.out.println("Account::storeCurrentUrl():request.url="+request.url);
+			//System.out.println("Account::storeCurrentUrl():request.url="+request.url);
 			flash.put("url", request.url);
 		}
 	}
@@ -52,12 +52,12 @@ public class Account extends Controller {
 			if(lastorder == null) {
             	lastorder = new BookOrder(user);
             	lastorder.save();
-            	System.out.println("Account:storeUserIfLoggedIn()::created a new order:"+lastorder.id);
+            	//System.out.println("Account:storeUserIfLoggedIn()::created a new order:"+lastorder.id);
             }else {
-            	System.out.println("Account:storeUserIfLoggedIn()::existing pendOrder:"+lastorder.id +" retrieved from db");
+            	//System.out.println("Account:storeUserIfLoggedIn()::existing pendOrder:"+lastorder.id +" retrieved from db");
             }
-            renderArgs.put("cart", lastorder);
-            System.out.println("Account:storeUserIfLoggedIn()::cart with items:"+lastorder.cartItems.size()+" put as lastorder");
+			renderArgs.put("cart", lastorder);
+            //System.out.println("Account:storeUserIfLoggedIn()::cart with items:"+lastorder.cartItems.size()+" put as lastorder");
 		}
 	}
 	
@@ -68,35 +68,35 @@ public class Account extends Controller {
 		if(lastorder!=null) {
 			lastorder.refresh();//state refreshed
 		}
-		System.out.println("controllers.Account.getPendingOrder():lastorder="+lastorder);
+		//System.out.println("controllers.Account.getPendingOrder():lastorder="+lastorder);
 		return lastorder;
 	}
 	
 	public static void addItemToCart(Long bookId,Long cartId,String quantity) {
-		System.out.println("Account::addItemToCart()::bookId="+bookId+" cartId="+cartId+"quantity="+quantity);
+		//System.out.println("Account::addItemToCart()::bookId="+bookId+" cartId="+cartId+"quantity="+quantity);
 		Book book = Book.findById(bookId);
 		BookOrder order = BookOrder.findById(cartId);
 		int qty = Integer.parseInt(quantity);
 		CartItem cartItem = new CartItem(book,qty);
 		order.addItem(cartItem, qty);
 		order.save();
-		System.out.println("Account::addItemToCart()::order saved");
+		//System.out.println("Account::addItemToCart()::order saved");
 		
 		gotoLastView();
 	}
 	
 	public static void removeItemFromCart(Long cartId,Long cartItemId) {
-		System.out.println("Account::remove():cartId=" +cartId+" cartItemId="+cartItemId);
+		//System.out.println("Account::remove():cartId=" +cartId+" cartItemId="+cartItemId);
 		
 		CartItem cartItem = CartItem.findById(cartItemId);
 		BookOrder cart = BookOrder.findById(cartId);
 		
-		System.out.println("Account::remove():initially cartitems="+cart.cartItemsCount());
+		//System.out.println("Account::remove():initially cartitems="+cart.cartItemsCount());
 		//if cart has this cartitem remove it
 		if(cart.cartItems.contains(cartItem)) {
 			cart.removeItem(cartItem);
 			cart.save();
-			System.out.println("Account::remove():cart saved cartitems="+cart.cartItemsCount());
+			//System.out.println("Account::remove():cart saved cartitems="+cart.cartItemsCount());
 			
 		}
 		gotoLastView();
@@ -106,25 +106,25 @@ public class Account extends Controller {
 		BookShopUser customer = BookShopUser.findById(customerId);
 		BookOrder cart = getPendingOrder(customer);
 		if (cart.cartItemsCount()==0) {
-			System.out.println("Account::showCheckoutForm():cart empty ..going to Application.index()");
+			//System.out.println("Account::showCheckoutForm():cart empty ..going to Application.index()");
 			Application.index();
 		}else {
-			System.out.println("Account::showCheckoutForm():render with cart="+cart.getId()+" customer="+customer.getId());
+			//System.out.println("Account::showCheckoutForm():render with cart="+cart.getId()+" customer="+customer.getId());
 			//nextpage after checkout
 			Map map = new HashMap();
 			map.put("customerId", customer.getId());
 			String paymentpage = Router.reverse("Account.showPaymentForm",map).url;
-			System.out.println("Account::showCheckoutForm():paymentpage="+paymentpage);
+			//System.out.println("Account::showCheckoutForm():paymentpage="+paymentpage);
 			Address latestAddress = Address.find("bookshopuser = ? order by dateOfSubmit desc", customer).first();
-			System.out.println("Account::showCheckoutForm():latestAddress="+latestAddress);
+			//System.out.println("Account::showCheckoutForm():latestAddress="+latestAddress);
 			render(cart,customer,paymentpage,latestAddress);
 		}
 	}
 	
 	public static void editCartItem(Long cartId,String quantity,Long cartItemId) {
-		System.out.println("Account::editCartItem():cartId="+cartId +"cartItemId="+cartItemId +"quantity="+quantity);
+		//System.out.println("Account::editCartItem():cartId="+cartId +"cartItemId="+cartItemId +"quantity="+quantity);
 		CartItem cartItem = CartItem.findById(cartItemId);
-		System.out.println("Account::editCartItem():got cartItem="+cartItem.book.name+" "+cartItem.quantity);
+		//System.out.println("Account::editCartItem():got cartItem="+cartItem.book.name+" "+cartItem.quantity);
 		BookOrder cart = BookOrder.findById(cartId);
 		int qty = Integer.parseInt(quantity);
 		cartItem.quantity=qty;
@@ -133,6 +133,14 @@ public class Account extends Controller {
 	}
 	
 	public static void setCustomerAddressDetails(String nexturl,Long customerId,@Required(message="validation.addressline1") String addressline1,String addressline2,String city,@Required(message="validation.state")String state,String pincode,String phonenumber,@Required(message="validation.country") String country) {
+		/*
+		 The tag html snippet customeraddressform is included at 2 places,
+		 1.In showCheckoutForm.If the form submission succeeds,we need to go to payment page
+		 2.In orderConfirmPage.If form submission succeeds,we need to show the orderconfirmpage again 
+		 So,the container page supplies a nextpage url,which is passed to this method 
+		  
+		 */
+		System.out.println("Account:setCustomerAddressDetails()::nexturl="+nexturl);
 		BookShopUser customer = BookShopUser.findById(customerId);
 		BookOrder cart = getPendingOrder(customer);
 		
@@ -149,38 +157,39 @@ public class Account extends Controller {
 		phonenumber = phonenumber.trim();
 		
 		Address address = findOrCreateAddress(customer,addressline1,addressline2,city,state,pincode,phonenumber,country);
-		//if customer addresses dont contain address
+		//if customer addresses don't contain address
 		
 		if ((customer.addresses.size()==0) || !(customer.addresses.contains(address)) ) {
 			customer.addresses.add(address);
 			customer.save();
-			System.out.println("Account:setCustomerAddressDetails()::customer.saved");
+			//System.out.println("Account:setCustomerAddressDetails()::customer.saved");
 		}
 		
-		if(nexturl!=null && nexturl.length()!=0) {
-			System.out.println("Account:setCustomerAddressDetails()::redirect to:"+nexturl);
+		/*if(nexturl!=null && nexturl.length()!=0) {
+			//System.out.println("Account:setCustomerAddressDetails()::redirect to:"+nexturl);
 			redirect(nexturl);//
 		}else {
-			System.out.println("Account:setCustomerAddressDetails()::gotoLastView:");
+			//System.out.println("Account:setCustomerAddressDetails()::gotoLastView:");
 			gotoLastView();
-		}
+		}*/
+		redirect(nexturl);
 	}
 	
 	private static Address findOrCreateAddress(BookShopUser customer,String addressline1,	String addressline2, String city, String state, String pincode,String phonenumber, String country) {
-		/*System.out.println("findOrCreateAddress():: addressline1="+addressline1+addressline1.length());
-		System.out.println("findOrCreateAddress():: addressline2="+addressline2);
-		System.out.println("findOrCreateAddress():: city="+city);
-		System.out.println("findOrCreateAddress():: state="+state+state.length());
-		System.out.println("findOrCreateAddress():: pincode="+pincode);
-		System.out.println("findOrCreateAddress():: phonenumber="+phonenumber);
-		System.out.println("findOrCreateAddress():: country="+country);*/
+		/*//System.out.println("findOrCreateAddress():: addressline1="+addressline1+addressline1.length());
+		//System.out.println("findOrCreateAddress():: addressline2="+addressline2);
+		//System.out.println("findOrCreateAddress():: city="+city);
+		//System.out.println("findOrCreateAddress():: state="+state+state.length());
+		//System.out.println("findOrCreateAddress():: pincode="+pincode);
+		//System.out.println("findOrCreateAddress():: phonenumber="+phonenumber);
+		//System.out.println("findOrCreateAddress():: country="+country);*/
 		
 		
 		String query = "select distinct a from  Address a where a.bookshopuser=:bookshopuser and a.addressLine1=:addressline1 and a.addressLine2=:addressline2 and a.city=:city and a.state=:state and a.pincode=:pincode and a.phoneNumber=:phonenumber and a.country=:country";
 		Address address = Address.find(query).bind("bookshopuser", customer).bind("addressline1", addressline1).bind("addressline2", addressline2).bind("city", city).bind("state", state).bind("pincode", pincode).bind("phonenumber", phonenumber).bind("country", country).first();
 		if(address == null) {//create a new address
 			address = new Address();
-			System.out.println("Account::findOrCreateAddress() creating new address");
+			//System.out.println("Account::findOrCreateAddress() creating new address");
 			address.addressLine1=addressline1;
 			address.addressLine2=addressline2;
 			address.city=city;
@@ -188,10 +197,10 @@ public class Account extends Controller {
 			address.phoneNumber=phonenumber;
 			address.pincode=pincode;
 			address.country=country;
-			address.bookshopuser = customer;//?
+			address.bookshopuser = customer;
 			address.save();
 		}else {
-			System.out.println("Account::findOrCreateAddress() got old address");
+			//System.out.println("Account::findOrCreateAddress() got old address");
 			address.dateOfSubmit = new Date();//??
 			address.save();
 		}
@@ -199,12 +208,12 @@ public class Account extends Controller {
 	}
 	
 	public static void showPaymentForm(Long customerId) {
-		System.out.println("showPaymentForm():: customerid="+customerId);
+		//System.out.println("showPaymentForm():: customerid="+customerId);
 		BookShopUser customer = BookShopUser.findById(customerId);
-		System.out.println("showPaymentForm():: customer has ="+customer.payments.size()+" payments");
+		//System.out.println("showPaymentForm():: customer has ="+customer.payments.size()+" payments");
 		BookOrder cart = getPendingOrder(customer);
 		if(cart.cartItems.size()==0) {//if cart empty go to Home page
-			System.out.println("showPaymentForm():: calling Application.index()");
+			//System.out.println("showPaymentForm():: calling Application.index()");
 			Application.index();
 		}
 		Map map = new HashMap();
@@ -215,18 +224,18 @@ public class Account extends Controller {
 	}
 	
 	public static void addNewPaymentDetails(Long customerId,@Required(message="validation.ccname") String newCCName,@Required @CCNumber(value=14,message="validation.ccnum_minsz") String newCreditCardNumber,@Required(message="validation.ccmonth") String newCCExpMonth,@Required(message="validation.ccyear") String newCCExpYear,@Required(message="validation.cctype") String newCCType){
-		System.out.println("addNewPaymentDetails():: customerid="+customerId);
-		System.out.println("addNewPaymentDetails():: newCCName="+newCCName+"="+newCCName.length());
-		System.out.println("addNewPaymentDetails():: newCreditCardNumber="+newCreditCardNumber+"="+newCreditCardNumber.length());
-		System.out.println("addNewPaymentDetails():: newCCExpMonth="+newCCExpMonth);
-		System.out.println("addNewPaymentDetails():: newCCExpYear="+newCCExpYear);
-		System.out.println("addNewPaymentDetails():: newCCType="+newCCType);
+		//System.out.println("addNewPaymentDetails():: customerid="+customerId);
+		//System.out.println("addNewPaymentDetails():: newCCName="+newCCName+"="+newCCName.length());
+		//System.out.println("addNewPaymentDetails():: newCreditCardNumber="+newCreditCardNumber+"="+newCreditCardNumber.length());
+		//System.out.println("addNewPaymentDetails():: newCCExpMonth="+newCCExpMonth);
+		//System.out.println("addNewPaymentDetails():: newCCExpYear="+newCCExpYear);
+		//System.out.println("addNewPaymentDetails():: newCCType="+newCCType);
 		
 		if(validation.hasErrors()) {
-			System.out.println("addNewPaymentDetails():: validation errors!");
+			//System.out.println("addNewPaymentDetails():: validation errors!");
 			params.flash();
 			validation.keep();
-			System.out.println("calling showPaymentForm("+customerId+")");
+			//System.out.println("calling showPaymentForm("+customerId+")");
 			Account.showPaymentForm(customerId);
 		}
 		BookShopUser customer = BookShopUser.findById(customerId);
@@ -236,19 +245,26 @@ public class Account extends Controller {
 		}
 		PaymentProcessor.addToPaymentProcessor(customer,newCCName,newCreditCardNumber,newCCExpMonth,newCCExpYear,newCCType);
 		String maskedCCNum = PaymentUtils.maskCCNumber(newCreditCardNumber);
-		System.out.println("addNewPaymentDetails():: maskedCCNum:"+maskedCCNum);
+		//System.out.println("addNewPaymentDetails():: maskedCCNum:"+maskedCCNum);
 		Payment payment = findOrCreatePayment(customer,newCCName,maskedCCNum, newCCExpMonth,newCCExpYear, newCCType);
-		System.out.println("addNewPaymentDetails():: foundOr created payment:"+payment);
-		System.out.println("addNewPaymentDetails()::new payment method");
+		//System.out.println("addNewPaymentDetails():: foundOr created payment:"+payment);
+		//System.out.println("addNewPaymentDetails()::new payment method");
 		customer.payments.add(payment);
 		customer.save();
-		System.out.println("addNewPaymentDetails()::customer  has:"+customer.payments.size()+" payments");
+		//System.out.println("addNewPaymentDetails()::customer  has:"+customer.payments.size()+" payments");
 		
 		showPaymentForm(customerId);
 	}
 	
 	
-	public static void setPaymentDetails(Long customerId,String nexturl,@Required Long paymentId) {
+	public static void setPaymentDetails(Long customerId,String nexturl,@Required(message="validation.payment_select") Long paymentId) {
+		/*
+		 The paymentOptions tag html snippet is included in 2 places
+		 1.In showPaymentForm. from here ,after successful submission ,we go to orderconfirm page
+		 2.In showOrderConfirmPage, after successful submission we go to showOrderConfirmPage itself
+		 So,we pass a nextpage url to denote the next page to go to.
+		 */
+		
 		System.out.println("setPaymentDetails():: nexturl="+nexturl);
 		if(validation.hasErrors()) {
 			System.out.println("setPaymentDetails():: validation errors!");
@@ -259,18 +275,18 @@ public class Account extends Controller {
 		Payment selected = Payment.findById(paymentId);
 		customer.currentPayment = selected;
 		customer.save();
-		System.out.println("setPaymentDetails():: cust currentpayment="+customer.currentPayment.id);
+		//System.out.println("setPaymentDetails():: cust currentpayment="+customer.currentPayment.id);
 		
 		BookOrder cart = getPendingOrder(customer);
 		cart.paymentMethod = selected;
 		cart.save();
-		System.out.println("setPaymentDetails():: cart.paymentMethod="+cart.paymentMethod.id);
+		//System.out.println("setPaymentDetails():: cart.paymentMethod="+cart.paymentMethod.id);
 		redirect(nexturl);
 	}
 	
-	public static void showOrderConfirmPage(String nexturl,Long customerId) {
+	public static void showOrderConfirmPage(Long customerId) {
 		//WHY DO we need the nexturl????
-		System.out.println("showOrderConfirmPage("+customerId+"nexturl="+nexturl+")");
+		//System.out.println("showOrderConfirmPage("+customerId+"nexturl="+nexturl+")");
 		BookShopUser customer = BookShopUser.findById(customerId);
 		//if no items in cart go back to index
 		BookOrder cart = getPendingOrder(customer);
@@ -278,7 +294,7 @@ public class Account extends Controller {
 			Application.index();
 		}
 		if((customer.payments.size()==0) || (customer.currentPayment == null)){
-			System.out.println("showOrderConfirmPage():: empty payments or no selectedpayment");
+			//System.out.println("showOrderConfirmPage():: empty payments or no selectedpayment");
 			showPaymentForm(customerId);
 		}
 		Address latestAddress = Address.find("bookshopuser = ? order by dateOfSubmit desc", customer).first();
@@ -287,13 +303,13 @@ public class Account extends Controller {
 		Map map = new HashMap();
 		map.put("customerId", customer.id);
 		String orderconfirmpage = Router.reverse("Account.showOrderConfirmPage",map).url;
-		System.out.println("Account::showOrderConfirmPage():confirmpage="+orderconfirmpage);
-		System.out.println("Account::showOrderConfirmPage():render()");
-		render(customer,latestAddress);
+		//System.out.println("Account::showOrderConfirmPage():confirmpage="+orderconfirmpage);
+		//System.out.println("Account::showOrderConfirmPage():render()");
+		render(customer,orderconfirmpage,latestAddress);
 	}
 	
 	public static void confirmOrder(Long customerId) {
-		System.out.println("Account::confirmOrder():"+customerId);
+		//System.out.println("Account::confirmOrder():"+customerId);
 		BookShopUser customer = BookShopUser.findById(customerId);
 		BookOrder cart = getPendingOrder(customer);
 		//cart.orderDate = new Date();//??
@@ -314,7 +330,7 @@ public class Account extends Controller {
 	public static void deleteBookOrder(Long id) {
 		BookOrder order = BookOrder.findById(id);
 		order.delete();
-		System.out.println("Account::deleteBookOrder():order="+order+" deleted");
+		//System.out.println("Account::deleteBookOrder():order="+order+" deleted");
 		Application.index();
 	}
 	
@@ -325,7 +341,7 @@ public class Account extends Controller {
 			payment = new Payment(name,creditCardNumber,month,year,cctype);
 			payment.bookshopuser = customer;
 			payment.save();
-			System.out.println("findOrCreatePayment():: created new Payment");
+			//System.out.println("findOrCreatePayment():: created new Payment");
 		}
 		return payment;
 	}
@@ -333,10 +349,10 @@ public class Account extends Controller {
 	private static void gotoLastView() {
 		String url = flash.get("url");
 		if(url!=null) {
-			System.out.println("Account::gotoLastView()::url not null");
+			//System.out.println("Account::gotoLastView()::url not null");
 			redirect(url);
 		}else {
-			System.out.println("Account::gotoLastView()::url null  ..go to /");
+			//System.out.println("Account::gotoLastView()::url null  ..go to /");
 			Application.index();
 		}
 	}
