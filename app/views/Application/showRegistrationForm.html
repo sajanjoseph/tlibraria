@@ -1,0 +1,37 @@
+#{extends 'main.html' /}
+#{set title:'register' /}
+
+<div id="register">
+<span id="registerheading" ><h2>Register with an email and password</h2></span>
+#{form @Application.register()}
+	<p>
+		<label for="email">Enter an email address:</label>
+		<input type="text" name="email" id="email" size="25" value=""/>
+		<span class="errormsg">#{error 'email' /}</span>
+	</p>
+	<p>
+		<label for="password">Choose your password:</label>
+		<input type="password" name="password" id="password" size="25" value=""/>
+		<span class="errormsg">#{error 'password' /}</span>
+	</p>
+	<p>
+		<label for="passwordconfirm">Confirm your password:</label>
+		<input type="password" name="passwordconfirm" id="passwordconfirm" size="25" value=""/>
+		<span class="errormsg">#{error 'passwordconfirm' /}</span>
+	</p>
+	<p>
+		<label for="fullname">Enter your FullName:</label>
+		<input type="text" name="fullname" id="fullname" size="25" value=""/>
+		<span class="errormsg">#{error 'fullname' /}</span>
+	</p>
+	<p>
+		<input type="submit" id="register" value= "&{'register.button.text'}" />
+	</p>
+
+
+#{/form}
+</div>
+
+<div id="footer">
+	<a href="@{Application.index()}" > Home </a>
+</div>

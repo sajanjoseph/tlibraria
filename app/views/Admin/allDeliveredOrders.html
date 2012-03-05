@@ -1,0 +1,18 @@
+#{extends 'admin.html'/}
+#{set title: 'delivered orders'/}
+#{if deliveredOrders}
+<h3>Delivered</h3>
+<div class="orderslisting">
+#{list items:deliveredOrders,as:'customerOrder' }
+	<p>
+		<a href="@{Admin.showEditBookOrderForm(customerOrder.id)}">${customerOrder?.customer?.email} ${customerOrder?.orderDate}</a>
+	</p>
+#{/list}
+
+</div>
+
+#{/if}
+#{else}
+No orders Delivered yet
+#{/else}
+

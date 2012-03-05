@@ -19,7 +19,7 @@
    </p>
 </div>
 
-#{ifnot  bookOrder?.status==utils.Status.PENDING}
+#{ifnot  (bookOrder?.status==utils.Status.PENDING)|| (bookOrder?.status==utils.Status.DELIVERED)}
 	<h3>Edit or Delete <span>this Order</span></h3>
 	
 	#{form @Admin.deleteBookOrder(bookOrder?.id)}
@@ -48,4 +48,6 @@
 	
 #{/ifnot}
 
-
+<div id="footer">
+	        <a href="@{Admin.index()}" > AdminPage </a>
+</div>

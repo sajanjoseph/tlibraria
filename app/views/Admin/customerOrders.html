@@ -9,5 +9,25 @@
 	</p>
 #{/list}
 
+</div>
 
+<div class="sidebox vertgradient rounded">
+<p>
+<a href="@{Admin.allPendingOrders()}"> <img src="@{'/public/images/pending_red1.png'}" alt="pending" />view all pending orders(need to be confirmed by customer)</a>
+</p>
+
+<p>
+<a href="@{Admin.allConfirmedOrders()}"> <img src="@{'/public/images/confirmedOrders.png'}" alt="confirmed" />view all confirmed orders(need to be approveded by admin)</a>
+</p>
+
+<p>
+<a href="@{Admin.allApprovedOrders()}"> <img src="@{'/public/images/approved_brown.png'}" alt="approved" />view all approved orders(ready to be delivered)</a>
+</p>
+
+<p>
+<a href="@{Admin.allDeliveredOrders()}"> <img src="@{'/public/images/delivered_blue.png'}" alt="delivered" />view all delevered orders</a>
+</p>
+
+<div id="footer">
+	        <a href="@{Admin.index()}" > AdminPage </a>
 </div>

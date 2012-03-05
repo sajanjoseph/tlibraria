@@ -1,6 +1,6 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
-
+<span class="sidebox vertgradient rounded"> <a href="@{Application.showRegistrationForm()}">register new user</a> </span>
 #{if book}
 	#{showminicart book:book,customer:customer,cart:cart/}
 	#{showbook book:book, as:'full' /}

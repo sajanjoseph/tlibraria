@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        
+    </head>
+    <body>
+    	 
+    	<div id="header">
+    		<div id="logo">
+    			<h2> ${shopLogoText} </h2>
+    		</div>
+    	</div>
+    	#{doLayout /}
+    
+    	<div id="footer">
+	        <a href="@{Admin.index()}" > AdminPage </a>
+		</div>
+    </body>
+</html>

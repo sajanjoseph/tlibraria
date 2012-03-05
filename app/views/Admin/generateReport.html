@@ -1,0 +1,31 @@
+#{extends 'report.html'/}
+<h3>${title}</h3>
+
+#{if book_QuantityMap}
+<div id="soldbooks">
+
+</div>
+<table id="books-sold" border="1">
+<tr>
+<th>Bookname</th>
+<th>quantity</th>
+<th>price per book &{'currencysymbol'}</th>
+<th>total price &{'currencysymbol'}</th>
+</tr>
+#{list items:book_QuantityMap.keySet() , as:'key'}
+	<tr>
+	<td>${key.getName()} </td>
+	<td>${book_QuantityMap.get(key)} </td>
+	<td>${key.getPrice().formatCurrency(messages.get('currencycode')).raw()} </td>
+	<td>&{'currencysymbol'} ${book_QuantityMap.get(key) * key.getPrice() } </td>
+	</tr>
+#{/list}	
+</table>
+<div id="totalAmountFromAllSales">
+Total book price :${totalPriceOfBooks.formatCurrency(messages.get('currencycode')).raw()}
+<br/>
+Total Amount fromSales :${totalAmountFromSales.formatCurrency(messages.get('currencycode')).raw()}
+</div>
+
+
+#{/if}

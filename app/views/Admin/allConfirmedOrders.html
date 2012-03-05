@@ -1,0 +1,17 @@
+#{extends 'admin.html'/}
+#{set title: 'pending orders'/}
+#{if confirmedOrders}
+<h3>Confirmed</h3>
+<div class="orderslisting">
+#{list items:confirmedOrders,as:'customerOrder' }
+	<p>
+		<a href="@{Admin.showEditBookOrderForm(customerOrder.id)}">${customerOrder?.customer?.email} ${customerOrder?.orderDate}</a>
+	</p>
+#{/list}
+
+</div>
+#{/if}
+#{else}
+No confirmed orders
+#{/else}
+

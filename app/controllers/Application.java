@@ -2,8 +2,10 @@ package controllers;
 
 import play.*;
 import play.cache.Cache;
+import play.data.validation.Email;
 import play.data.validation.Required;
 import play.mvc.*;
+import utils.HashUtils;
 import utils.Status;
 
 import java.util.*;
@@ -36,11 +38,58 @@ public class Application extends Controller {
 	            	System.out.println("Account:storeUserIfLoggedIn()::existing pendOrder:"+lastorder.id +" retrieved from db");
 	            }
 	            renderArgs.put("cart", lastorder);
-	            System.out.println("Account:storeUserIfLoggedIn()::cart with items:"+lastorder.cartItems.size()+" put as lastorder");
+	            System.out.println("Application:storeUserIfLoggedIn()::cart with items:"+lastorder.cartItems.size()+" put as lastorder");
             }
 		}
 	}
 	
+	public static void register(@Required @Email String email,@Required  String password,@Required String passwordconfirm,@Required String fullname) {
+		System.out.println("Application::register:email="+email);
+		System.out.println("Application::register:password="+password);
+		System.out.println("Application::register:passwordconfirm="+passwordconfirm);
+		System.out.println("Application::register:fullName="+fullname);
+		if(validation.hasErrors()) {
+			System.out.println("Application::validation error");
+			for (play.data.validation.Error err: validation.errors()) {
+				System.out.println(err);
+			}
+			
+			//System.out.println("Application::validation:email="+validation.error("email"));
+			//System.out.println("Application::validation:pass="+validation.error("password"));
+			//System.out.println("Application::validation:passwordconfirm="+validation.error("passwordconfirm"));
+			
+			validation.keep();
+			showRegistrationForm();
+		}
+		if(!(password.trim().equals(passwordconfirm.trim()))  ){
+			System.out.println("Application::passwords don't match");
+			validation.addError("passwordconfirm","passwords donot match");
+			
+			System.out.println("Application::password equality:passwordconfirm="+validation.error("passwordconfirm"));
+			validation.keep();
+			showRegistrationForm();
+		}else if(BookShopUser.find("byEmail", email).first() !=null){
+			System.out.println("Application:register()::that email already taken");
+			validation.addError("email","Email already registered with us");
+			validation.keep();
+			showRegistrationForm();
+		}
+		
+		else{
+			System.out.println("Application::can register");
+			String hashpass= HashUtils.makeHash(password);
+			BookShopUser newUser = new BookShopUser(email,hashpass,fullname);
+			newUser.isCustomer=true;
+			newUser.save();
+			index();
+		}
+	}
+	
+	public static void showRegistrationForm() {
+		render();
+		
+	}
+
 	private static BookOrder getPendingOrder(BookShopUser customer) {
 		String query = "select o from BookOrder o where o.status=:status and o.customer =:customer order by o.orderDate DESC,o.id DESC";
 		 //BookOrder lastorder = BookOrder.find("select o from BookOrder o where o.status='pending' and o.customer =? order by o.order_date DESC,o.id DESC",customer).first();

@@ -34,6 +34,9 @@ public class BookShopUser extends Model {
 	@OneToMany(mappedBy="bookshopuser", cascade=CascadeType.ALL)
 	public Set<Payment> payments;
 	
+	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
+	public List<BookOrder> bookOrders;
+	
 	@OneToOne
 	public Payment currentPayment;
 	
@@ -45,6 +48,8 @@ public class BookShopUser extends Model {
 		super();
 		this.payments = new HashSet<Payment>();
 		this.addresses = new ArrayList<Address>();
+		this.bookOrders = new ArrayList<BookOrder>();
+		
 	}
 	
 	public BookShopUser(String email, String password, String fullname) {
@@ -54,6 +59,7 @@ public class BookShopUser extends Model {
         this.fullName = fullname;
         this.payments = new HashSet<Payment>();
         this.addresses = new ArrayList<Address>();
+        this.bookOrders = new ArrayList<BookOrder>();
     }
 	
 	public String toString() {

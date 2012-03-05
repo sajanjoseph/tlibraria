@@ -38,5 +38,7 @@ checkout_link=checkout
 
 delete.order.button.text=Delete Bookorder
 update.order.button.text=Update Bookorder
+
+register.button.text=Register
 403.message=You are not authorized to access that page!
 404.message=That Page was not found!
