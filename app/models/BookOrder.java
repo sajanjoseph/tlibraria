@@ -19,7 +19,7 @@ import utils.TaxCalculator;
 @Entity
 public class BookOrder extends Model {
 	
-	@OneToMany( cascade=CascadeType.ALL,orphanRemoval=true,fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="order", cascade=CascadeType.ALL,orphanRemoval=true,fetch=FetchType.EAGER)
 	public Set<CartItem> cartItems;
 
 	public Status status;

@@ -127,9 +127,9 @@ public class Admin extends Controller {
 	
 	public static void deleteBookOrder(Long id) {
 		BookOrder order = BookOrder.findById(id);
-		System.out.println("deleteBookOrder()::got order:"+order.getId()+" of status:"+order.status);
+		System.out.println("Admin::deleteBookOrder()::got order:"+order.getId()+" of status:"+order.status);
 		order.delete();
-		System.out.println("deleteBookOrder()::deleted order");
+		System.out.println("Admin::deleteBookOrder()::deleted order");
 		Admin.customerOrders();
 	}
 	

@@ -7,7 +7,8 @@ GET     /admin/?                                Admin.index
 
 # Home page
 GET     /                                       Application.index
-GET     /books/dummy                            Account.dummy
+GET     /register                               Application.showRegistrationForm
+POST    /register                               Application.register
 GET     /books/category/{category}              Application.listTagged
 GET     /books/{<[0-9]+>bookId}                 Application.details
 GET     /books/{keyword}                        Application.search

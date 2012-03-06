@@ -438,6 +438,25 @@ public class ApplicationTest extends FunctionalTest {
     	System.out.println("TEST::AFTER POST:addItemsToCart id="+cart.id+" has="+cart.cartItems.size());
     	return response;
     }
+	
+	@Test
+	public void testRegisterNewUSer() {
+		Fixtures.loadModels("data.yml");
+		Map<String,String> regusermap= new HashMap<String,String>();
+		regusermap.put("email", "newuser@gmail.com");
+		regusermap.put("password", "secret");
+		regusermap.put("passwordconfirm", "secret");
+		regusermap.put("fullname", "newuser");
+		
+		List<BookShopUser> users = BookShopUser.findAll();
+		assertEquals(3,users.size());
+		assertEquals(3,BookShopUser.count());
+		POST("/register",regusermap);
+		users = BookShopUser.findAll();
+		assertEquals(4,users.size());
+		assertEquals(4,BookShopUser.count());
+		
+	}
 	public static void restartTx() {
         JPAPlugin.closeTx(false);
         JPAPlugin.startTx(false);

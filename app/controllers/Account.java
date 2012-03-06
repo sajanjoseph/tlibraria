@@ -78,6 +78,7 @@ public class Account extends Controller {
 		BookOrder order = BookOrder.findById(cartId);
 		int qty = Integer.parseInt(quantity);
 		CartItem cartItem = new CartItem(book,qty);
+		cartItem.order=order;
 		order.addItem(cartItem, qty);
 		order.save();
 		//System.out.println("Account::addItemToCart()::order saved");
@@ -330,7 +331,7 @@ public class Account extends Controller {
 	public static void deleteBookOrder(Long id) {
 		BookOrder order = BookOrder.findById(id);
 		order.delete();
-		//System.out.println("Account::deleteBookOrder():order="+order+" deleted");
+		System.out.println("Account::deleteBookOrder():order="+order+" deleted");
 		Application.index();
 	}
 	

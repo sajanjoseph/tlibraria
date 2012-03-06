@@ -15,6 +15,9 @@ public class CartItem extends Model implements Comparable<CartItem>{
 	
 	public int quantity;
 	
+	@ManyToOne
+	public BookOrder order;
+	
 	public CartItem(Book book, int quantity) {
 		super();
 		this.book = book;
