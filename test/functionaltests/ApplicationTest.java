@@ -457,6 +457,46 @@ public class ApplicationTest extends FunctionalTest {
 		assertEquals(4,BookShopUser.count());
 		
 	}
+	@Test
+	public void testRegisterNewUSerExistingEmail() {
+		Fixtures.loadModels("data.yml");
+		Map<String,String> regusermap= new HashMap<String,String>();
+		regusermap.put("email", "denny@gmail.com");
+		regusermap.put("password", "secret");
+		regusermap.put("passwordconfirm", "secret");
+		regusermap.put("fullname", "denny");
+		
+		List<BookShopUser> users = BookShopUser.findAll();
+		assertEquals(3,users.size());
+		assertEquals(3,BookShopUser.count());
+		Response response = POST("/register",regusermap);
+		
+		users = BookShopUser.findAll();
+		assertEquals(3,users.size());
+		assertEquals(3,BookShopUser.count());
+		assertLocationRedirect("/register",response);
+	}
+	
+	@Test
+	public void testRegisterUnMatchedPasswords() {
+		Fixtures.loadModels("data.yml");
+		Map<String,String> regusermap= new HashMap<String,String>();
+		regusermap.put("email", "newuser@gmail.com");
+		regusermap.put("password", "secret");
+		regusermap.put("passwordconfirm", "nosecret");
+		regusermap.put("fullname", "newuser");
+		
+		List<BookShopUser> users = BookShopUser.findAll();
+		assertEquals(3,users.size());
+		assertEquals(3,BookShopUser.count());
+		Response response = POST("/register",regusermap);
+		
+		users = BookShopUser.findAll();
+		assertEquals(3,users.size());
+		assertEquals(3,BookShopUser.count());
+		assertLocationRedirect("/register",response);
+	}
+	
 	public static void restartTx() {
         JPAPlugin.closeTx(false);
         JPAPlugin.startTx(false);

@@ -57,20 +57,22 @@ public class Application extends Controller {
 			//System.out.println("Application::validation:email="+validation.error("email"));
 			//System.out.println("Application::validation:pass="+validation.error("password"));
 			//System.out.println("Application::validation:passwordconfirm="+validation.error("passwordconfirm"));
-			
+			params.flash();
 			validation.keep();
 			showRegistrationForm();
 		}
 		if(!(password.trim().equals(passwordconfirm.trim()))  ){
 			System.out.println("Application::passwords don't match");
-			validation.addError("passwordconfirm","passwords donot match");
+			validation.addError("passwordconfirm","Passwords donot match!");
 			
 			System.out.println("Application::password equality:passwordconfirm="+validation.error("passwordconfirm"));
+			params.flash();
 			validation.keep();
 			showRegistrationForm();
 		}else if(BookShopUser.find("byEmail", email).first() !=null){
 			System.out.println("Application:register()::that email already taken");
-			validation.addError("email","Email already registered with us");
+			validation.addError("email","Email already registered with us!");
+			params.flash();
 			validation.keep();
 			showRegistrationForm();
 		}
@@ -81,6 +83,7 @@ public class Application extends Controller {
 			BookShopUser newUser = new BookShopUser(email,hashpass,fullname);
 			newUser.isCustomer=true;
 			newUser.save();
+			flash.put("regsuccess","successfully created user "+fullname);
 			index();
 		}
 	}

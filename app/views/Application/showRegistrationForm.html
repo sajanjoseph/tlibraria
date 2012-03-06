@@ -6,7 +6,7 @@
 #{form @Application.register()}
 	<p>
 		<label for="email">Enter an email address:</label>
-		<input type="text" name="email" id="email" size="25" value=""/>
+		<input type="text" name="email" id="email" value="${flash.email}" size="25" value=""/>
 		<span class="errormsg">#{error 'email' /}</span>
 	</p>
 	<p>
@@ -21,11 +21,11 @@
 	</p>
 	<p>
 		<label for="fullname">Enter your FullName:</label>
-		<input type="text" name="fullname" id="fullname" size="25" value=""/>
+		<input type="text" name="fullname" id="fullname" value="${flash.fullname}" size="25" value=""/>
 		<span class="errormsg">#{error 'fullname' /}</span>
 	</p>
 	<p>
-		<input type="submit" id="register" value= "&{'register.button.text'}" />
+		<input type="submit" id="registerbtn" value= "&{'register.button.text'}" />
 	</p>
 
 

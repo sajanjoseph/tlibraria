@@ -1,5 +1,9 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
+
+#{if flash.regsuccess}
+    <p class="success">${flash.regsuccess}</p>
+#{/if}
 <span class="sidebox vertgradient rounded"> <a href="@{Application.showRegistrationForm()}">register new user</a> </span>
 #{if book}
 	#{showminicart book:book,customer:customer,cart:cart/}

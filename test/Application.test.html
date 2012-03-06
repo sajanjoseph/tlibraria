@@ -178,3 +178,82 @@
 	clickAndWait('link=Log out')
 #{/selenium}
 
+#{selenium 'register user with missing email field'}
+	clearSession()
+	open('/')
+	assertTitle('Home')
+	clickAndWait('link=register new user')
+	assertTitle('register')
+	
+	type('password','secret')
+	type('passwordconfirm','secret')
+	type('fullname','newuser1')
+	clickAndWait(id=registerbtn)
+	assertTitle('register')
+	assertTextPresent('Email is required')
+#{/selenium}
+
+#{selenium 'register user with missing password field'}
+	clearSession()
+	open('/')
+	assertTitle('Home')
+	clickAndWait('link=register new user')
+	assertTitle('register')
+	
+	type('email','newuser1@gmail.com')
+	type('passwordconfirm','secret')
+	type('fullname','newuser1')
+	clickAndWait(id=registerbtn)
+	assertTitle('register')
+	assertTextPresent('Password is required')
+#{/selenium}
+
+#{selenium 'register user with missing fullname field'}
+	clearSession()
+	open('/')
+	assertTitle('Home')
+	clickAndWait('link=register new user')
+	assertTitle('register')
+	
+	type('email','newuser1@gmail.com')
+	type('password','secret')
+	type('passwordconfirm','secret')
+	
+	clickAndWait(id=registerbtn)
+	assertTitle('register')
+	assertTextPresent('FullName is required')
+#{/selenium}
+
+#{selenium 'register user with existing email'}
+	clearSession()
+	open('/')
+	assertTitle('Home')
+	clickAndWait('link=register new user')
+	assertTitle('register')
+	
+	type('email','denny@gmail.com')
+	type('password','secret')
+	type('passwordconfirm','secret')
+	type('fullname','denny')
+	clickAndWait(id=registerbtn)
+	assertTitle('register')
+	assertTextPresent('Email already registered with us!')
+
+#{/selenium}
+
+#{selenium 'register user with unmatched passwords'}
+	clearSession()
+	open('/')
+	assertTitle('Home')
+	clickAndWait('link=register new user')
+	assertTitle('register')
+	
+	type('email','newuser1@gmail.com')
+	type('password','secret')
+	type('passwordconfirm','nosecret')
+	type('fullname','newuser1')
+	clickAndWait(id=registerbtn)
+	assertTitle('register')
+	assertTextPresent('Passwords donot match')
+
+#{/selenium}

@@ -9,6 +9,7 @@ address=Address
 email=Email
 password=Password
 fullName=FullName
+fullname=FullName
 isAdmin=User is Admin
 author=Author
 content=Content
@@ -39,6 +40,6 @@ checkout_link=checkout
 delete.order.button.text=Delete Bookorder
 update.order.button.text=Update Bookorder
 
-register.button.text=Register
+register.button.text=Create New User
 403.message=You are not authorized to access that page!
 404.message=That Page was not found!
