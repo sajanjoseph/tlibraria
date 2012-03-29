@@ -10,6 +10,10 @@ import utils.Status;
 
 import java.util.*;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Whitelist;
+
 import models.*;
 
 public class Application extends Controller {
@@ -165,10 +169,16 @@ public class Application extends Controller {
     		//render("Application/details.html",book,books);
     		details(bookId);
     	}
-    	book.addReview(author, content);
+    	String safecontent=Jsoup.clean(content, Whitelist.basic());
+    	System.out.println("safecontent="+safecontent+"of size="+safecontent.length());
+    	if(safecontent.length()>0) {
+    		book.addReview(author, safecontent);
     	
-    	flash.success("Thanks for your review, %s!", author);//success msg put in flash
-    	System.out.println("add review success");
+    		flash.success("Thanks for your review, %s!", author);//success msg put in flash
+    		System.out.println("add review success");
+    	}else {
+    		flash.error("could not add your review, %s!", author);
+    	}
     	//render("Application/details.html",book,books);
     	details(bookId);
     }

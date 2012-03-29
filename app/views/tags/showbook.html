@@ -67,6 +67,9 @@
 #{if flash.success}
 <p class="success">${flash.success}</p>
 #{/if}
+#{elseif flash.error}
+<p class="error">${flash.error}</p>
+#{/elseif}
 <div class="addreviewform">
 <a href="#" class="showaddreviewformlink"><img src="@{'/public/images/addreview-small.png'}"/>add a review for ${_book.name}</a>
 <a href="#" class="hideaddreviewformlink">hide reviewform</a>

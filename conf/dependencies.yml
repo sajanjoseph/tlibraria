@@ -6,3 +6,4 @@ require:
     - play -> secure
     - play -> pdf 0.9
     - play -> search head
+    - play -> logisimayml 1.8
